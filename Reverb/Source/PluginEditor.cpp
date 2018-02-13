@@ -71,7 +71,7 @@ void ReverbAudioProcessorEditor::sliderValueChanged(Slider* slider)
 void ReverbAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-	g.fillAll(Colours::darkslateblue);
+	g.fillAll(Colours::black);
 }
 
 void ReverbAudioProcessorEditor::resized()
