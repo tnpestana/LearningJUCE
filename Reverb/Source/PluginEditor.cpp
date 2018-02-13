@@ -20,8 +20,8 @@ ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
     setSize (400, 150);
 
 	addAndMakeVisible(dryWetSlider);
-	dryWetSlider.setSliderStyle(Slider::LinearVertical);
-	dryWetSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 30);
+	dryWetSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+	dryWetSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 35, 20);
 	dryWetSlider.setRange(0, 1, 0.01);
 	dryWetSlider.setValue(1);
 	dryWetSlider.addListener(this);
@@ -31,8 +31,8 @@ ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
 	dryWetLabel.setJustificationType(Justification::centred);
 
 	addAndMakeVisible(roomSizeSlider);
-	roomSizeSlider.setSliderStyle(Slider::LinearVertical);
-	roomSizeSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 30);
+	roomSizeSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+	roomSizeSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 35, 20);
 	roomSizeSlider.setRange(0, 1, 0.01);
 	roomSizeSlider.setValue(0);
 	roomSizeSlider.addListener(this);
@@ -42,8 +42,8 @@ ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
 	roomSizeLabel.setJustificationType(Justification::centred);
 
 	addAndMakeVisible(dampingSlider);
-	dampingSlider.setSliderStyle(Slider::LinearVertical);
-	dampingSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 30);
+	dampingSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+	dampingSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 35, 20);
 	dampingSlider.setRange(0, 1, 0.01);
 	dampingSlider.setValue(0);
 	dampingSlider.addListener(this);
