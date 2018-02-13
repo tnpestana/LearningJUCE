@@ -17,7 +17,7 @@ ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 150);
+	setSize (300, 150);
 
 	addAndMakeVisible(dryWetSlider);
 	dryWetSlider.setSliderStyle(Slider::RotaryVerticalDrag);
@@ -77,7 +77,7 @@ void ReverbAudioProcessorEditor::paint (Graphics& g)
 void ReverbAudioProcessorEditor::resized()
 {
 	const int labelWidth = getWidth() / 3;
-	const int labelHeight = 30;
+	const int labelHeight = 25;
 	const int sliderWidth = getWidth() / 3;
 	const int sliderHeight = getHeight() - labelHeight;
 
