@@ -22,13 +22,19 @@ ReverbAudioProcessor::ReverbAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+			parameters(*this, nullptr)
 #endif
 {
-	reverbParameters.dryLevel = 0;
-	reverbParameters.wetLevel = 1.0;
-	reverbParameters.roomSize = 0;
-	reverbParameters.damping = 0;
+	parameters.createAndAddParameter("dryWet", "DryWet", String(),
+		NormalisableRange<float>(0.0f, 1.0f), 1.0f, nullptr, nullptr);
+	parameters.createAndAddParameter("rommSize", "RoomSize", String(),
+		NormalisableRange<float>(0.0f, 1.0f), 0.0f, nullptr, nullptr);
+	parameters.createAndAddParameter("damping", "Damping", String(),
+		NormalisableRange<float>(0.0f, 1.0f), 0.0f, nullptr, nullptr);
+
+	parameters.state = ValueTree(Identifier("ReverbState"));
+
 	reverb.setParameters(reverbParameters);
 }
 
@@ -99,27 +105,6 @@ void ReverbAudioProcessor::changeProgramName (int index, const String& newName)
 }
 
 //==============================================================================
-// USER METHODS
-void ReverbAudioProcessor::updateDamping(double newValue)
-{
-	reverbParameters.damping = newValue;
-	reverb.setParameters(reverbParameters);
-}
-
-void ReverbAudioProcessor::updateRoomSize(double newValue)
-{
-	reverbParameters.roomSize = newValue;
-	reverb.setParameters(reverbParameters);
-}
-
-void ReverbAudioProcessor::updateDryWet(double newValue)
-{
-	reverbParameters.dryLevel = 1 - newValue;
-	reverbParameters.wetLevel = newValue;
-	reverb.setParameters(reverbParameters);
-}
-
-//==============================================================================
 void ReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 	reverb.setSampleRate(sampleRate);
@@ -171,14 +156,6 @@ void ReverbAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
 	else if (numChannels == 2)
 		reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        float* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
-    }
 }
 
 //==============================================================================

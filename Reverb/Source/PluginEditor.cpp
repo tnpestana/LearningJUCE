@@ -23,50 +23,40 @@ ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
 	dryWetSlider.setSliderStyle(Slider::RotaryVerticalDrag);
 	dryWetSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 35, 20);
 	dryWetSlider.setRange(0, 1, 0.01);
-	dryWetSlider.setValue(1);
-	dryWetSlider.addListener(this);
 
 	addAndMakeVisible(dryWetLabel);
 	dryWetLabel.setText("Dry/Wet", dontSendNotification);
 	dryWetLabel.setJustificationType(Justification::centred);
+	dryWetAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.parameters,
+		"dryWet", dryWetSlider);
 
 	addAndMakeVisible(roomSizeSlider);
 	roomSizeSlider.setSliderStyle(Slider::RotaryVerticalDrag);
 	roomSizeSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 35, 20);
 	roomSizeSlider.setRange(0, 1, 0.01);
-	roomSizeSlider.setValue(0);
-	roomSizeSlider.addListener(this);
 
 	addAndMakeVisible(roomSizeLabel);
 	roomSizeLabel.setText("Room Size", dontSendNotification);
 	roomSizeLabel.setJustificationType(Justification::centred);
+	roomSizeAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.parameters,
+		"roomSize", roomSizeSlider);
 
 	addAndMakeVisible(dampingSlider);
 	dampingSlider.setSliderStyle(Slider::RotaryVerticalDrag);
 	dampingSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 35, 20);
 	dampingSlider.setRange(0, 1, 0.01);
-	dampingSlider.setValue(0);
-	dampingSlider.addListener(this);
 
 	addAndMakeVisible(dampingLabel);
 	dampingLabel.setText("Damping", dontSendNotification);
 	dampingLabel.setJustificationType(Justification::centred);
+	dampingAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.parameters,
+		"damping", dampingSlider);
 }
 
 ReverbAudioProcessorEditor::~ReverbAudioProcessorEditor()
 {
 }
 
-//==============================================================================
-void ReverbAudioProcessorEditor::sliderValueChanged(Slider* slider)
-{
-	if (slider == &dampingSlider)
-		processor.updateDamping(dampingSlider.getValue());
-	else if (slider == &roomSizeSlider)
-		processor.updateRoomSize(roomSizeSlider.getValue());
-	else if (slider == &dryWetSlider)
-		processor.updateDryWet(dryWetSlider.getValue());
-}
 
 void ReverbAudioProcessorEditor::paint (Graphics& g)
 {
@@ -81,8 +71,10 @@ void ReverbAudioProcessorEditor::resized()
 	const int sliderWidth = getWidth() / 3;
 	const int sliderHeight = getHeight() - labelHeight;
 
-	dryWetLabel.setBounds(0, sliderHeight, labelWidth, labelHeight);
+	Rectangle<int> area(getLocalBounds());
+
 	dryWetSlider.setBounds(0, 0, sliderWidth, sliderHeight);
+	dryWetLabel.setBounds(0, sliderHeight, labelWidth, labelHeight);
 
 	roomSizeLabel.setBounds(sliderWidth, sliderHeight, labelWidth, labelHeight);
 	roomSizeSlider.setBounds(sliderWidth, 0, sliderWidth, sliderHeight);
