@@ -28,14 +28,14 @@ ReverbAudioProcessor::ReverbAudioProcessor()
 {
 	parameters.createAndAddParameter("dryWet", "DryWet", String(),
 		NormalisableRange<float>(0.0f, 1.0f), 1.0f, nullptr, nullptr);
-	parameters.createAndAddParameter("rommSize", "RoomSize", String(),
+	parameters.createAndAddParameter("roomSize", "RoomSize", String(),
 		NormalisableRange<float>(0.0f, 1.0f), 0.0f, nullptr, nullptr);
 	parameters.createAndAddParameter("damping", "Damping", String(),
 		NormalisableRange<float>(0.0f, 1.0f), 0.0f, nullptr, nullptr);
 
 	parameters.state = ValueTree(Identifier("ReverbState"));
 
-	reverb.setParameters(reverbParameters);
+	//reverb.setParameters(reverbParameters);
 }
 
 ReverbAudioProcessor::~ReverbAudioProcessor()
@@ -142,19 +142,38 @@ bool ReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) c
 
 void ReverbAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    ScopedNoDenormals noDenormals;
     const int totalNumInputChannels  = getTotalNumInputChannels();
     const int totalNumOutputChannels = getTotalNumOutputChannels();
+
+	const float currentDryWet = *parameters.getRawParameterValue("dryWet");
+	const float currentRoomSize= *parameters.getRawParameterValue("roomSize");
+	const float currentDamping= *parameters.getRawParameterValue("damping");
 
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
 	const auto numChannels = jmin(totalNumInputChannels, totalNumOutputChannels);
 
+	reverbParameters.dryLevel = 1 - currentDryWet;
+	reverbParameters.wetLevel = currentDryWet;
+	reverbParameters.roomSize = currentRoomSize;
+	reverbParameters.damping = currentDamping;
+
+	reverb.setParameters(reverbParameters);
+
 	if (numChannels == 1)
 		reverb.processMono(buffer.getWritePointer(0), buffer.getNumSamples());
 	else if (numChannels == 2)
 		reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), buffer.getNumSamples());
+
+	// This is the place where you'd normally do the guts of your plugin's
+	// audio processing...
+	for (int channel = 0; channel < totalNumInputChannels; ++channel)
+	{
+		float* channelData = buffer.getWritePointer(channel);
+
+		// ..do something to the data...
+	}
 
 }
 
