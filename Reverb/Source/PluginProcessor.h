@@ -23,12 +23,6 @@ public:
     ReverbAudioProcessor();
     ~ReverbAudioProcessor();
 
-    //==============================================================================
-	// USER METHODS
-	void updateDamping(double newValue);
-	void updateRoomSize(double newValue);
-	void updateDryWet(double newValue);
-
 	//==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
