@@ -191,12 +191,21 @@ AudioProcessorEditor* ReverbAudioProcessor::createEditor()
 //==============================================================================
 void ReverbAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-
+	ScopedPointer<XmlElement> xml(parameters.state.createXml());
+	copyXmlToBinary(*xml, destData);
 }
 
 void ReverbAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
+	ScopedPointer<XmlElement> savedParametersXml (getXmlFromBinary(data, sizeInBytes));
+	if (savedParametersXml != nullptr)
+	{
+		if (savedParametersXml->hasTagName(parameters.state.getType()))
+		{
+			parameters.state = ValueTree::fromXml(*savedParametersXml);
+		}
 
+	}
 }
 
 //==============================================================================
