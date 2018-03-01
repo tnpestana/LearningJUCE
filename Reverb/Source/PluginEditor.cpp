@@ -12,8 +12,8 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p, AudioProcessorValueTreeState& vts)
+    : AudioProcessorEditor (&p), processor (p), valueStateTree (vts)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -27,7 +27,7 @@ ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
 	addAndMakeVisible(dryWetLabel);
 	dryWetLabel.setText("Dry/Wet", dontSendNotification);
 	dryWetLabel.setJustificationType(Justification::centred);
-	dryWetAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.parameters,
+	dryWetAttachment = new AudioProcessorValueTreeState::SliderAttachment(valueStateTree,
 		"dryWet", dryWetSlider);
 
 	addAndMakeVisible(roomSizeSlider);
@@ -38,7 +38,7 @@ ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
 	addAndMakeVisible(roomSizeLabel);
 	roomSizeLabel.setText("Room Size", dontSendNotification);
 	roomSizeLabel.setJustificationType(Justification::centred);
-	roomSizeAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.parameters,
+	roomSizeAttachment = new AudioProcessorValueTreeState::SliderAttachment(valueStateTree,
 		"roomSize", roomSizeSlider);
 
 	addAndMakeVisible(dampingSlider);
@@ -49,7 +49,7 @@ ReverbAudioProcessorEditor::ReverbAudioProcessorEditor (ReverbAudioProcessor& p)
 	addAndMakeVisible(dampingLabel);
 	dampingLabel.setText("Damping", dontSendNotification);
 	dampingLabel.setJustificationType(Justification::centred);
-	dampingAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.parameters,
+	dampingAttachment = new AudioProcessorValueTreeState::SliderAttachment(valueStateTree,
 		"damping", dampingSlider);
 }
 

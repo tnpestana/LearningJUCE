@@ -20,13 +20,14 @@
 class ReverbAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
-    ReverbAudioProcessorEditor (ReverbAudioProcessor&);
+    ReverbAudioProcessorEditor (ReverbAudioProcessor&, AudioProcessorValueTreeState&);
     ~ReverbAudioProcessorEditor();
 	
 	void paint (Graphics&) override;
     void resized() override;
 
 private:
+	AudioProcessorValueTreeState& valueStateTree;
 
 	Slider dryWetSlider;
 	Label dryWetLabel;

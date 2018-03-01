@@ -185,7 +185,7 @@ bool ReverbAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* ReverbAudioProcessor::createEditor()
 {
-    return new ReverbAudioProcessorEditor (*this);
+    return new ReverbAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
