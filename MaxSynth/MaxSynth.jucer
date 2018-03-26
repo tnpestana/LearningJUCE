@@ -5,6 +5,8 @@
               pluginIsSynth="1" pluginWantsMidiIn="1">
   <MAINGROUP id="qKzJuQ" name="MaxSynth">
     <GROUP id="{320A5B0E-1C82-D7AF-ED67-57F01BA3B687}" name="Source">
+      <FILE id="BTzRtI" name="MySynth.cpp" compile="1" resource="0" file="Source/MySynth.cpp"/>
+      <FILE id="pAnisl" name="MySynth.h" compile="0" resource="0" file="Source/MySynth.h"/>
       <FILE id="apwori" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="TvWJrt" name="PluginProcessor.h" compile="0" resource="0"
