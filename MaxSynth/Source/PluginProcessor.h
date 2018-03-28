@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MySynth.h"
+#include "MaxSynth.h"
 
 //==============================================================================
 /**
