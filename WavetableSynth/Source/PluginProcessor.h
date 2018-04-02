@@ -59,6 +59,7 @@ public:
 private:
 	float level;
 	OwnedArray<SineOscillator> oscillators;
+	static int bMaj7MidiNotes[16];
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WavetableSynthAudioProcessor)

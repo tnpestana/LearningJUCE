@@ -32,6 +32,16 @@ WavetableSynthAudioProcessor::~WavetableSynthAudioProcessor()
 }
 
 //==============================================================================
+int WavetableSynthAudioProcessor::bMaj7MidiNotes[16] =
+{
+	35, 47, 59, 71,
+	27, 39, 51, 63,
+	30, 42, 54, 66,
+	34, 46, 58, 70 
+};
+
+
+//==============================================================================
 const String WavetableSynthAudioProcessor::getName() const
 {
     return JucePlugin_Name;
@@ -102,7 +112,7 @@ void WavetableSynthAudioProcessor::prepareToPlay (double sampleRate, int samples
 	{
 		SineOscillator* oscillator = new SineOscillator();
 
-		double midiNote = Random::getSystemRandom().nextDouble() * 36.0 + 48.0;
+		double midiNote = bMaj7MidiNotes[Random::getSystemRandom().nextInt(Range<int>::Range(0,15))];
 		double frequency = 440.0 * pow(2.0, (midiNote - 69.0) / 12.0);
 
 		oscillator->setFrequency((float)frequency, sampleRate);
