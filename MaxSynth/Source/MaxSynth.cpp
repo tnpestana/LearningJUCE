@@ -36,7 +36,7 @@ MaxSynthVoice::MaxSynthVoice()
 	:	level(0.0),
 		frequency(0.0)
 {
-
+	
 }
 
 MaxSynthVoice::~MaxSynthVoice()
@@ -51,14 +51,24 @@ bool MaxSynthVoice::canPlaySound(SynthesiserSound * sound)
 
 void MaxSynthVoice::startNote(int midiNoteNumber, float velocity, SynthesiserSound * sound, int currentPitchWheelPosition)
 {
-	level = velocity * 0.15;
+	sineEnv.setAttack(0);
+	sineEnv.setDecay(1);
+	sineEnv.setSustain(0.8);
+	sineEnv.setRelease(2000);
+
+	sineEnv.trigger = 1;
+	level = velocity;
 	frequency = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
+
 }
 
 void MaxSynthVoice::stopNote(float velocity, bool allowTailOff)
 {
-	level = 0;
-	clearCurrentNote();
+	sineEnv.trigger = 0;
+	level = velocity;
+
+	if(velocity == 0)
+		clearCurrentNote();
 }
 
 void MaxSynthVoice::pitchWheelMoved(int newPitchWheelValue)
@@ -71,14 +81,22 @@ void MaxSynthVoice::controllerMoved(int controllerNumber, int newControllerValue
 
 void MaxSynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
 {
+	
+
 	for (int sample = 0; sample < numSamples; sample++)
 	{
-		double currentSample = sineOsc.sinewave(frequency) * level;
+		double sinewave = playSine();
+		double envelope = sineEnv.adsr(sinewave, sineEnv.trigger);
 
 		for (int channel = 0; channel < outputBuffer.getNumChannels(); channel++)
 		{
-			outputBuffer.addSample(channel, startSample, currentSample);
+			outputBuffer.addSample(channel, startSample, envelope * level);
 		}
 		startSample++;
 	}
+}
+
+double MaxSynthVoice::playSine()
+{
+	return sineOsc.sinewave(frequency);
 }

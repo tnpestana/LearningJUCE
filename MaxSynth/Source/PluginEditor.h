@@ -26,10 +26,13 @@ public:
     void paint (Graphics&) override;
     void resized() override;
 
+	void writeLabel(String);
+
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MaxSynthAudioProcessor& processor;
+	Label label;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MaxSynthAudioProcessorEditor)
 };

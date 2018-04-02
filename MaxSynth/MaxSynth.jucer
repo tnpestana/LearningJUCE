@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="MaxSynth" projectType="audioplug" buildStandalone="1" jucerVersion="5.3.0"
+<JUCERPROJECT name="MaxSynth" projectType="audioplug" jucerVersion="5.3.0"
               buildVST3="0" buildAU="0" buildAUv3="0" buildRTAS="0" buildAAX="0"
               pluginIsSynth="1" pluginWantsMidiIn="1">
   <MAINGROUP id="qKzJuQ" name="MaxSynth">

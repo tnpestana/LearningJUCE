@@ -40,7 +40,12 @@ public:
 	virtual void pitchWheelMoved(int newPitchWheelValue) override;
 	virtual void controllerMoved(int controllerNumber, int newControllerValue) override;
 	virtual void renderNextBlock(AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override;
+
+	//==============================================================================
+	double playSine();
+
 private:
 	double frequency, level;
 	maxiOsc sineOsc;
+	maxiEnv sineEnv;
 };
