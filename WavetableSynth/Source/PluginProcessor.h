@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "SineOscillator.h"
 
 //==============================================================================
 /**
@@ -56,6 +57,9 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+	float level;
+	OwnedArray<SineOscillator> oscillators;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WavetableSynthAudioProcessor)
 };
