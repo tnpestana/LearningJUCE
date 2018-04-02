@@ -19,6 +19,7 @@ public:
 
 	void setFrequency(float, float);
 	float getNextSample();
+	void updateAngle();
 
 private:
 	float currentAngle, angleDelta;
