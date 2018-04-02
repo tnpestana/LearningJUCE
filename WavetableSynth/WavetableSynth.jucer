@@ -12,6 +12,10 @@
       <FILE id="Q2DSgC" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="a8XreI" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="D08uSY" name="SineOscillator.cpp" compile="1" resource="0"
+            file="Source/SineOscillator.cpp"/>
+      <FILE id="HOqu8q" name="SineOscillator.h" compile="0" resource="0"
+            file="Source/SineOscillator.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
