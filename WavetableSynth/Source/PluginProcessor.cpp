@@ -22,35 +22,17 @@ WavetableSynthAudioProcessor::WavetableSynthAudioProcessor()
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
                        ),
-		level(0.0f),
-		tablesize(128)
+		level(0.0f)
 #endif
 {
-	createWavetable();
-
-	
+	WavetableOscillator::createWavetable();	
 }
 
 WavetableSynthAudioProcessor::~WavetableSynthAudioProcessor()
 {
 }
 
-//==============================================================================
-void WavetableSynthAudioProcessor::createWavetable()
-{
-	sineTable.setSize(1, tablesize);
-	float* samples = sineTable.getWritePointer(0);
 
-	float angleDelta = MathConstants<double>::twoPi / (float)tablesize;
-	float currentAngle = 0.0;
-
-	for (int i = 0; i < tablesize; i++)
-	{
-		float sample = std::sin(currentAngle);
-		samples[i] = (float)sample;
-		currentAngle += angleDelta;
-	}
-}
 
 
 int WavetableSynthAudioProcessor::bMaj7MidiNotes[16] =
@@ -130,7 +112,7 @@ void WavetableSynthAudioProcessor::prepareToPlay (double sampleRate, int samples
 
 	for (int i = 0; i < numberOfOscillators; i++)
 	{
-		WavetableOscillator* oscillator = new WavetableOscillator (sineTable);
+		WavetableOscillator* oscillator = new WavetableOscillator ();
 
 		double midiNote = bMaj7MidiNotes[Random::getSystemRandom().nextInt(Range<int>::Range(0,15))];
 		double frequency = 440.0 * pow(2.0, (midiNote - 69.0) / 12.0);

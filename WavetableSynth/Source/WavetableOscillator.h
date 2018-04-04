@@ -14,13 +14,16 @@
 class WavetableOscillator
 {
 public:
-	WavetableOscillator(const AudioSampleBuffer&);
+	WavetableOscillator();
 	~WavetableOscillator();
 
 	void setFrequency(float, float);
 	float getNextSample();
 
+	static AudioSampleBuffer* wavetable;
+	static void createWavetable();
+	static int tableSize;
+
 private:
-	const AudioSampleBuffer& wavetable;
 	float currentIndex, tableDelta;
 };

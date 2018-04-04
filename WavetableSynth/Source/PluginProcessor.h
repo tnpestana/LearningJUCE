@@ -38,9 +38,6 @@ public:
     AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
 
-	//==============================================================================
-	void createWavetable();
-
     //==============================================================================
     const String getName() const override;
 
@@ -64,9 +61,6 @@ private:
 	float level;
 	OwnedArray<WavetableOscillator> oscillators;
 	static int bMaj7MidiNotes[];
-
-	const int tablesize;
-	AudioSampleBuffer sineTable;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WavetableSynthAudioProcessor)

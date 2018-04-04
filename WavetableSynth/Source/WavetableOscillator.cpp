@@ -10,9 +10,9 @@
 
 #include "WavetableOscillator.h"
 
-WavetableOscillator::WavetableOscillator(const AudioSampleBuffer& wavetablePassed)
-	:	wavetable (wavetablePassed),
-		currentIndex(0.0f),
+//==============================================================================
+WavetableOscillator::WavetableOscillator()
+	:	currentIndex(0.0f),
 		tableDelta(0.0f)
 {
 }
@@ -21,22 +21,23 @@ WavetableOscillator::~WavetableOscillator()
 {
 }
 
+//==============================================================================
 void WavetableOscillator::setFrequency(float frequency, float sampleRate)
 {
-	auto tableSizeOverSampleRate = wavetable.getNumSamples() / sampleRate;
+	auto tableSizeOverSampleRate = wavetable->getNumSamples() / sampleRate;
 	tableDelta = frequency * tableSizeOverSampleRate;
 }
 
 float WavetableOscillator::getNextSample()
 {
-	float tableSize = wavetable.getNumSamples();
+	float tableSize = wavetable->getNumSamples();
 
 	int index0 = (int)currentIndex;
 	int index1 = index0 == (tableSize - 1) ? 0 : index0 + 1;
 
 	float fraction = currentIndex - (float)index0;
 
-	const float* table = wavetable.getReadPointer(0);
+	const float* table = wavetable->getReadPointer(0);
 	float value0 = table[index0];
 	float value1 = table[index1];
 
@@ -46,4 +47,25 @@ float WavetableOscillator::getNextSample()
 		currentIndex -= tableSize;
 
 	return currentSample;
+}
+
+//==============================================================================
+int WavetableOscillator::tableSize = 128;
+
+AudioSampleBuffer* WavetableOscillator::wavetable = new AudioSampleBuffer();
+
+void WavetableOscillator::createWavetable()
+{
+	wavetable->setSize(1, tableSize);
+	float* samples = wavetable->getWritePointer(0);
+
+	float angleDelta = MathConstants<double>::twoPi / (float)tableSize;
+	float currentAngle = 0.0;
+
+	for (int i = 0; i < tableSize; i++)
+	{
+		float sample = std::sin(currentAngle);
+		samples[i] = (float)sample;
+		currentAngle += angleDelta;
+	}
 }
