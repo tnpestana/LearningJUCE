@@ -52,7 +52,7 @@ float WavetableOscillator::getNextSample()
 //==============================================================================
 int WavetableOscillator::tableSize = 128;
 
-AudioSampleBuffer* WavetableOscillator::wavetable = new AudioSampleBuffer();
+ScopedPointer<AudioSampleBuffer> WavetableOscillator::wavetable = new AudioSampleBuffer();
 
 void WavetableOscillator::createWavetable()
 {
