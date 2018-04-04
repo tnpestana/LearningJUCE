@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "SineOscillator.h"
+#include "WavetableOScillator.h"
 
 //==============================================================================
 /**
@@ -37,6 +38,9 @@ public:
     AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;
 
+	//==============================================================================
+	void createWavetable();
+
     //==============================================================================
     const String getName() const override;
 
@@ -58,8 +62,11 @@ public:
 
 private:
 	float level;
-	OwnedArray<SineOscillator> oscillators;
+	OwnedArray<WavetableOscillator> oscillators;
 	static int bMaj7MidiNotes[];
+
+	const int tablesize;
+	AudioSampleBuffer sineTable;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WavetableSynthAudioProcessor)

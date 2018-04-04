@@ -16,6 +16,10 @@
             file="Source/SineOscillator.cpp"/>
       <FILE id="HOqu8q" name="SineOscillator.h" compile="0" resource="0"
             file="Source/SineOscillator.h"/>
+      <FILE id="ahnotB" name="WavetableOscillator.cpp" compile="1" resource="0"
+            file="Source/WavetableOscillator.cpp"/>
+      <FILE id="yVyGZr" name="WavetableOscillator.h" compile="0" resource="0"
+            file="Source/WavetableOscillator.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
