@@ -23,13 +23,13 @@ SineOscillator::~SineOscillator()
 
 void SineOscillator::setFrequency(float frequency, float sampleRate)
 {
-	auto cyclesPerSample = frequency / sampleRate;
+	float cyclesPerSample = frequency / sampleRate;
 	angleDelta = cyclesPerSample * MathConstants<float>::twoPi;
 }
 
 float SineOscillator::getNextSample()
 {
-	auto currentSample = std::sin(currentAngle);
+	float currentSample = std::sin(currentAngle);
 	updateAngle();
 	return currentSample;
 }

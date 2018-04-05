@@ -32,9 +32,6 @@ WavetableSynthAudioProcessor::~WavetableSynthAudioProcessor()
 {
 }
 
-
-
-
 int WavetableSynthAudioProcessor::bMaj7MidiNotes[16] =
 {
 	35, 47, 59, 71,
@@ -108,7 +105,7 @@ void WavetableSynthAudioProcessor::changeProgramName (int index, const String& n
 //==============================================================================
 void WavetableSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-	int numberOfOscillators = 200;
+	int numberOfOscillators = 100;
 
 	for (int i = 0; i < numberOfOscillators; i++)
 	{
@@ -156,17 +153,17 @@ bool WavetableSynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 
 void WavetableSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-	auto* leftBuffer = buffer.getWritePointer(0, 0);
+	float* leftBuffer = buffer.getWritePointer(0, 0);
 
-	auto* rightBuffer = buffer.getWritePointer(1, 0);
+	float* rightBuffer = buffer.getWritePointer(1, 0);
 	buffer.clear();
 
-	for (auto oscillatorIndex = 0; oscillatorIndex < oscillators.size(); ++oscillatorIndex)
+	for (int oscillatorIndex = 0; oscillatorIndex < oscillators.size(); ++oscillatorIndex)
 	{
-		auto* oscillator = oscillators.getUnchecked(oscillatorIndex);    // [8]
-		for (auto sample = 0; sample < buffer.getNumSamples(); ++sample)
+		WavetableOscillator* oscillator = oscillators.getUnchecked(oscillatorIndex);    // [8]
+		for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
 		{
-			auto levelSample = oscillator->getNextSample() * level;       // [9]
+			float levelSample = oscillator->getNextSample() * level;       // [9]
 			leftBuffer[sample] += levelSample;                           // [10]
 			rightBuffer[sample] += levelSample;
 		}

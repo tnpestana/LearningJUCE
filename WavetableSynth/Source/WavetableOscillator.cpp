@@ -24,7 +24,7 @@ WavetableOscillator::~WavetableOscillator()
 //==============================================================================
 void WavetableOscillator::setFrequency(float frequency, float sampleRate)
 {
-	auto tableSizeOverSampleRate = wavetable->getNumSamples() / sampleRate;
+	float tableSizeOverSampleRate = wavetable->getNumSamples() / sampleRate;
 	tableDelta = frequency * tableSizeOverSampleRate;
 }
 
@@ -50,6 +50,7 @@ float WavetableOscillator::getNextSample()
 }
 
 //==============================================================================
+// Static class members
 int WavetableOscillator::tableSize = 128;
 
 ScopedPointer<AudioSampleBuffer> WavetableOscillator::wavetable = new AudioSampleBuffer();

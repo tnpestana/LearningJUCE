@@ -20,8 +20,8 @@ public:
 	void setFrequency(float, float);
 	float getNextSample();
 
-	static ScopedPointer<AudioSampleBuffer> wavetable;
 	static void createWavetable();
+	static ScopedPointer<AudioSampleBuffer> wavetable;
 	static int tableSize;
 
 private:
