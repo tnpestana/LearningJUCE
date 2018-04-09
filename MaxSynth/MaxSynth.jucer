@@ -5,6 +5,32 @@
               pluginIsSynth="1" pluginWantsMidiIn="1">
   <MAINGROUP id="qKzJuQ" name="MaxSynth">
     <GROUP id="{320A5B0E-1C82-D7AF-ED67-57F01BA3B687}" name="Source">
+      <GROUP id="{DA3F9E54-2945-4504-C698-AB09D11FAB6F}" name="ADSR">
+        <FILE id="bJMfgM" name="ADSR.cpp" compile="1" resource="0" file="../../../ADSR/ADSR.cpp"/>
+        <FILE id="RxY4QW" name="ADSR.h" compile="0" resource="0" file="../../../ADSR/ADSR.h"/>
+      </GROUP>
+      <GROUP id="{570B161C-485D-B431-F1C8-53F4CE7C7C4C}" name="Maximilian">
+        <GROUP id="{C51870E2-0B3B-5DBC-FDA1-B6B8887C0EFD}" name="libs">
+          <FILE id="RdPpx9" name="fft.cpp" compile="1" resource="0" file="../../../Maximilian/libs/fft.cpp"/>
+          <FILE id="PfbdNB" name="fft.h" compile="0" resource="0" file="../../../Maximilian/libs/fft.h"/>
+          <FILE id="hdPrxT" name="maxiAtoms.cpp" compile="1" resource="0" file="../../../Maximilian/libs/maxiAtoms.cpp"/>
+          <FILE id="UO89Qg" name="maxiAtoms.h" compile="0" resource="0" file="../../../Maximilian/libs/maxiAtoms.h"/>
+          <FILE id="uKr6Wf" name="maxiBark.cpp" compile="1" resource="0" file="../../../Maximilian/libs/maxiBark.cpp"/>
+          <FILE id="bTF5mM" name="maxiBark.h" compile="0" resource="0" file="../../../Maximilian/libs/maxiBark.h"/>
+          <FILE id="whP7iv" name="maxiFFT.cpp" compile="1" resource="0" file="../../../Maximilian/libs/maxiFFT.cpp"/>
+          <FILE id="TNFWwE" name="maxiFFT.h" compile="0" resource="0" file="../../../Maximilian/libs/maxiFFT.h"/>
+          <FILE id="C1aXxz" name="maxiGrains.cpp" compile="1" resource="0" file="../../../Maximilian/libs/maxiGrains.cpp"/>
+          <FILE id="ogBRBd" name="maxiGrains.h" compile="0" resource="0" file="../../../Maximilian/libs/maxiGrains.h"/>
+          <FILE id="jhw8pA" name="maxim.h" compile="0" resource="0" file="../../../Maximilian/libs/maxim.h"/>
+          <FILE id="EXyUbj" name="maxiMFCC.cpp" compile="1" resource="0" file="../../../Maximilian/libs/maxiMFCC.cpp"/>
+          <FILE id="LB0rJA" name="maxiMFCC.h" compile="0" resource="0" file="../../../Maximilian/libs/maxiMFCC.h"/>
+          <FILE id="bTUGlw" name="sineTable.h" compile="0" resource="0" file="../../../Maximilian/libs/sineTable.h"/>
+        </GROUP>
+        <FILE id="AS6bkw" name="maximilian.cpp" compile="1" resource="0" file="../../../Maximilian/maximilian.cpp"/>
+        <FILE id="ETZZpj" name="maximilian.h" compile="0" resource="0" file="../../../Maximilian/maximilian.h"/>
+        <FILE id="lED2yZ" name="stb_vorbis.c" compile="1" resource="0" file="../../../Maximilian/stb_vorbis.c"/>
+        <FILE id="PctxoA" name="stb_vorbis.h" compile="0" resource="0" file="../../../Maximilian/stb_vorbis.h"/>
+      </GROUP>
       <FILE id="HNFJPJ" name="MaxSynth.cpp" compile="1" resource="0" file="Source/MaxSynth.cpp"/>
       <FILE id="ElIMR8" name="MaxSynth.h" compile="0" resource="0" file="Source/MaxSynth.h"/>
       <FILE id="apwori" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -14,35 +40,12 @@
       <FILE id="xVz2ef" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="j0PSmV" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <GROUP id="{FDCA4C92-5EA2-D5A0-A0B4-2ADB68671A0C}" name="Maximilian">
-        <FILE id="bjQB7O" name="main.cpp" compile="1" resource="0" file="../../Maximilian/main.cpp"/>
-        <FILE id="xiHN3f" name="maximilian.cpp" compile="1" resource="0" file="../../Maximilian/maximilian.cpp"/>
-        <FILE id="DfgVJk" name="maximilian.h" compile="0" resource="0" file="../../Maximilian/maximilian.h"/>
-        <FILE id="BnKt5O" name="stb_vorbis.c" compile="1" resource="0" file="../../Maximilian/stb_vorbis.c"/>
-        <FILE id="QmUjAb" name="stb_vorbis.h" compile="0" resource="0" file="../../Maximilian/stb_vorbis.h"/>
-        <GROUP id="{0C64F238-643A-B7DB-830F-A95BB28BC59E}" name="libs">
-          <FILE id="WI2X9X" name="fft.cpp" compile="1" resource="0" file="../../Maximilian/libs/fft.cpp"/>
-          <FILE id="XsIsmM" name="fft.h" compile="0" resource="0" file="../../Maximilian/libs/fft.h"/>
-          <FILE id="QuakF0" name="maxiAtoms.cpp" compile="1" resource="0" file="../../Maximilian/libs/maxiAtoms.cpp"/>
-          <FILE id="WIQnHE" name="maxiAtoms.h" compile="0" resource="0" file="../../Maximilian/libs/maxiAtoms.h"/>
-          <FILE id="Sri9uV" name="maxiBark.cpp" compile="1" resource="0" file="../../Maximilian/libs/maxiBark.cpp"/>
-          <FILE id="c6uRJc" name="maxiBark.h" compile="0" resource="0" file="../../Maximilian/libs/maxiBark.h"/>
-          <FILE id="GswlYW" name="maxiFFT.cpp" compile="1" resource="0" file="../../Maximilian/libs/maxiFFT.cpp"/>
-          <FILE id="tZiO8O" name="maxiFFT.h" compile="0" resource="0" file="../../Maximilian/libs/maxiFFT.h"/>
-          <FILE id="ajDRWA" name="maxiGrains.cpp" compile="1" resource="0" file="../../Maximilian/libs/maxiGrains.cpp"/>
-          <FILE id="Esdw0X" name="maxiGrains.h" compile="0" resource="0" file="../../Maximilian/libs/maxiGrains.h"/>
-          <FILE id="nkoFWe" name="maxim.h" compile="0" resource="0" file="../../Maximilian/libs/maxim.h"/>
-          <FILE id="ztk8WF" name="maxiMFCC.cpp" compile="1" resource="0" file="../../Maximilian/libs/maxiMFCC.cpp"/>
-          <FILE id="pO81zA" name="maxiMFCC.h" compile="0" resource="0" file="../../Maximilian/libs/maxiMFCC.h"/>
-          <FILE id="YMIfwy" name="sineTable.h" compile="0" resource="0" file="../../Maximilian/libs/sineTable.h"/>
-        </GROUP>
-      </GROUP>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" winArchitecture="Win32" headerPath="C:\Users\tnpes\Documents\Code\JUCE Platform\Maximilian"/>
+        <CONFIGURATION isDebug="1" name="Debug" winArchitecture="Win32" headerPath="C:\Users\tnpes\Documents\Code\JUCE Platform\Maximilian&#10;C:\Users\tnpes\Documents\Code\JUCE Platform\ADSR"/>
         <CONFIGURATION isDebug="0" name="Release" winArchitecture="Win32"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
