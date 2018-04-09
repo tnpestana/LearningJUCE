@@ -37,7 +37,7 @@ MaxSynthVoice::MaxSynthVoice()
 	sineEnv = new ADSR();
 
 	double sampleRate = getSampleRate();
-	sineEnv->setAttackRate(1 * sampleRate);
+	sineEnv->setAttackRate(0.2 * sampleRate);
 	sineEnv->setDecayRate(1 * sampleRate);
 	sineEnv->setSustainLevel(0.1);
 	sineEnv->setReleaseRate(2 * sampleRate);
@@ -55,8 +55,9 @@ bool MaxSynthVoice::canPlaySound(SynthesiserSound * sound)
 void MaxSynthVoice::startNote(int midiNoteNumber, float velocity, SynthesiserSound * sound, int currentPitchWheelPosition)
 {
 	sineEnv->gate(true);
-	level = velocity;
 	frequency = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
+	// level é um quinto do total (1/5 = 0.2) porque há 5 vozes em simultaneo
+	level = 0.2;
 }
 
 void MaxSynthVoice::stopNote(float velocity, bool allowTailOff)
@@ -81,10 +82,11 @@ void MaxSynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startS
 	for (int sample = 0; sample < numSamples; sample++)
 	{
 		double output = sineEnv->process() * playSine();
+		double filtered = sineFilter.lopass(output, 0.5);
 
 		for (int channel = 0; channel < outputBuffer.getNumChannels(); channel++)
 		{
-			outputBuffer.addSample(channel, startSample, output);
+			outputBuffer.addSample(channel, startSample, filtered * level);
 		}
 		startSample++;
 	}
@@ -92,5 +94,5 @@ void MaxSynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startS
 
 double MaxSynthVoice::playSine()
 {
-	return sineOsc.sinewave(frequency);
+	return sineOsc.square(frequency);
 }

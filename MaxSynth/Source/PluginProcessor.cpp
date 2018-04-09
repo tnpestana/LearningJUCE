@@ -134,7 +134,7 @@ bool MaxSynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 
 void MaxSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-	buffer.clear();
+	buffer.clear(); 
 	synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 

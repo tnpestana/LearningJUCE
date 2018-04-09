@@ -48,5 +48,6 @@ public:
 private:
 	double frequency, level;
 	maxiOsc sineOsc;
+	maxiFilter sineFilter;
 	ADSR* sineEnv;
 };
