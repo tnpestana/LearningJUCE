@@ -94,5 +94,5 @@ void MaxSynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startS
 
 double MaxSynthVoice::playSine()
 {
-	return sineOsc.square(frequency);
+	return sineOsc.sinewave(frequency);
 }
