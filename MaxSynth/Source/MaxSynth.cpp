@@ -13,12 +13,10 @@ Author:  tnpes
 //==============================================================================
 MaxSynthSound::MaxSynthSound()
 {
-
 }
 
 MaxSynthSound::~MaxSynthSound()
 {
-
 }
 
 bool MaxSynthSound::appliesToNote(int midiNoteNumber)
@@ -36,12 +34,17 @@ MaxSynthVoice::MaxSynthVoice()
 	:	level(0.0),
 		frequency(0.0)
 {
-	
+	sineEnv = new ADSR();
+
+	double sampleRate = getSampleRate();
+	sineEnv->setAttackRate(1 * sampleRate);
+	sineEnv->setDecayRate(1 * sampleRate);
+	sineEnv->setSustainLevel(0.1);
+	sineEnv->setReleaseRate(2 * sampleRate);
 }
 
 MaxSynthVoice::~MaxSynthVoice()
 {
-
 }
 
 bool MaxSynthVoice::canPlaySound(SynthesiserSound * sound)
@@ -51,21 +54,15 @@ bool MaxSynthVoice::canPlaySound(SynthesiserSound * sound)
 
 void MaxSynthVoice::startNote(int midiNoteNumber, float velocity, SynthesiserSound * sound, int currentPitchWheelPosition)
 {
-	sineEnv.setAttack(0);
-	sineEnv.setDecay(1);
-	sineEnv.setSustain(0.8);
-	sineEnv.setRelease(2000);
-
-	sineEnv.trigger = 1;
+	sineEnv->gate(true);
 	level = velocity;
 	frequency = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-
 }
 
 void MaxSynthVoice::stopNote(float velocity, bool allowTailOff)
 {
-	sineEnv.trigger = 0;
-	level = velocity;
+	sineEnv->gate(false);
+	allowTailOff = true;
 
 	if(velocity == 0)
 		clearCurrentNote();
@@ -81,16 +78,13 @@ void MaxSynthVoice::controllerMoved(int controllerNumber, int newControllerValue
 
 void MaxSynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
 {
-	
-
 	for (int sample = 0; sample < numSamples; sample++)
 	{
-		double sinewave = playSine();
-		double envelope = sineEnv.adsr(sinewave, sineEnv.trigger);
+		double output = sineEnv->process() * playSine();
 
 		for (int channel = 0; channel < outputBuffer.getNumChannels(); channel++)
 		{
-			outputBuffer.addSample(channel, startSample, envelope * level);
+			outputBuffer.addSample(channel, startSample, output);
 		}
 		startSample++;
 	}

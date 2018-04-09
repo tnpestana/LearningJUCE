@@ -11,6 +11,7 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Maximilian.h"
+#include "ADSR.h"
 
 //==============================================================================
 class MaxSynthSound : public SynthesiserSound
@@ -47,5 +48,5 @@ public:
 private:
 	double frequency, level;
 	maxiOsc sineOsc;
-	maxiEnv sineEnv;
+	ADSR* sineEnv;
 };
