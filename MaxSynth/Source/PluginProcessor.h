@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MaxSynth.h"
+#include "OscillatorEditor.h"
 
 //==============================================================================
 /**

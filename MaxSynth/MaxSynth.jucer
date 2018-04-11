@@ -40,6 +40,10 @@
       <FILE id="xVz2ef" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="j0PSmV" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="EpRJbC" name="OscillatorEditor.cpp" compile="1" resource="0"
+            file="Source/OscillatorEditor.cpp"/>
+      <FILE id="noBjnH" name="OscillatorEditor.h" compile="0" resource="0"
+            file="Source/OscillatorEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
