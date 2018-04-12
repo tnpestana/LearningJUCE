@@ -25,10 +25,18 @@ MaxSynthAudioProcessor::MaxSynthAudioProcessor()
 		treeState(*this, nullptr)
 #endif
 {
-	treeState.createAndAddParameter("attack", "Attack", "attack", NormalisableRange<float>(0.0f, 5.0f), 0.1f, nullptr, nullptr);
-	treeState.createAndAddParameter("decay", "Decay", "decay", NormalisableRange<float>(0.0f, 5.0f), 0.1f, nullptr, nullptr);
-	treeState.createAndAddParameter("sustain", "Sustain", "sustain", NormalisableRange<float>(0.0f, 1.0f), 0.5f, nullptr, nullptr);
-	treeState.createAndAddParameter("release", "Release", "release", NormalisableRange<float>(0.0f, 5.0f), 0.1f, nullptr, nullptr);
+	NormalisableRange<float> attackRange (0.0f, 5.0f, 0.001f);
+	attackRange.setSkewForCentre(1.0);
+	NormalisableRange<float> decayRange (0.0f, 5.0f, 0.001f);
+	decayRange.setSkewForCentre(1.0);
+	NormalisableRange<float> sustainRange (0.0f, 5.0f, 0.001f);
+	NormalisableRange<float> releaseRange (0.0f, 5.0f, 0.001f);
+	releaseRange.setSkewForCentre(1.0);
+
+	treeState.createAndAddParameter("attack", "Attack", "attack", attackRange, 0.1f, nullptr, nullptr);
+	treeState.createAndAddParameter("decay", "Decay", "decay", decayRange, 0.1f, nullptr, nullptr);
+	treeState.createAndAddParameter("sustain", "Sustain", "sustain", sustainRange, 0.5f, nullptr, nullptr);
+	treeState.createAndAddParameter("release", "Release", "release", releaseRange, 0.1f, nullptr, nullptr);
 
 	synth.clearVoices();
 	for (int i = 0; i < 5; i++)

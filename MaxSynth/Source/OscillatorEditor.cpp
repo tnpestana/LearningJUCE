@@ -16,7 +16,6 @@ OscillatorEditor::OscillatorEditor(MaxSynthAudioProcessor& p)
 	addAndMakeVisible(attackSlider);
 	attackSlider.setSliderStyle(Slider::LinearVertical);
 	attackSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 40, 20);
-	attackSlider.setSkewFactorFromMidPoint(1.0);
 	addAndMakeVisible(attackLabel);
 	attackLabel.setText("attack", dontSendNotification);
 	attackAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.treeState, "attack", attackSlider);
@@ -25,7 +24,6 @@ OscillatorEditor::OscillatorEditor(MaxSynthAudioProcessor& p)
 	addAndMakeVisible(decaySlider);
 	decaySlider.setSliderStyle(Slider::LinearVertical);
 	decaySlider.setTextBoxStyle(Slider::TextBoxBelow, true, 40, 20);
-	decaySlider.setSkewFactorFromMidPoint(1.0);
 	addAndMakeVisible(decayLabel);
 	decayLabel.setText("decay", dontSendNotification);
 	decayAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.treeState, "decay", decaySlider);
@@ -42,7 +40,6 @@ OscillatorEditor::OscillatorEditor(MaxSynthAudioProcessor& p)
 	addAndMakeVisible(releaseSlider);
 	releaseSlider.setSliderStyle(Slider::LinearVertical);
 	releaseSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 40, 20);
-	releaseSlider.setSkewFactorFromMidPoint(1.0);
 	addAndMakeVisible(releaseLabel);
 	releaseLabel.setText("release", dontSendNotification);
 	releaseAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.treeState, "release", releaseSlider);
