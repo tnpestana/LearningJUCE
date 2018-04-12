@@ -10,11 +10,13 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "PluginProcessor.h"
+
 
 class OscillatorEditor : public Component
 {
 public:
-	OscillatorEditor();
+	OscillatorEditor(MaxSynthAudioProcessor&);
 	~OscillatorEditor();
 
 	void paint(Graphics&) override;
@@ -23,5 +25,8 @@ public:
 private:
 	Slider attackSlider, decaySlider, sustainSlider, releaseSlider;
 	Label attackLabel, decayLabel, sustainLabel, releaseLabel;
+
+	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> attackAttachment, decayAttachment, sustainAttachment, releaseAttachment;
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscillatorEditor)
 };

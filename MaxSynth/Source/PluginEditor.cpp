@@ -13,12 +13,11 @@
 
 //==============================================================================
 MaxSynthAudioProcessorEditor::MaxSynthAudioProcessorEditor (MaxSynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+    : AudioProcessorEditor (&p), processor (p), oscillator(p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
     setSize (200, 200);
-	addAndMakeVisible (oscillator);
+
+	addAndMakeVisible (&oscillator);
 }
 
 MaxSynthAudioProcessorEditor::~MaxSynthAudioProcessorEditor()

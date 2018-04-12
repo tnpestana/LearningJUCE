@@ -24,7 +24,6 @@ public:
 	virtual bool appliesToNote(int midiNoteNumber) override;
 
 	virtual bool appliesToChannel(int midiChannel) override;
-
 };
 
 //==============================================================================
@@ -44,6 +43,7 @@ public:
 
 	//==============================================================================
 	double playSine();
+	void getEnvelopeParameters(float* attack, float* decay, float* sustain, float* release);
 
 private:
 	double frequency, level;

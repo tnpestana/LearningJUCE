@@ -10,39 +10,39 @@
 
 #include "OscillatorEditor.h"
 
-OscillatorEditor::OscillatorEditor()
+OscillatorEditor::OscillatorEditor(MaxSynthAudioProcessor& p)
 {
-	// attack slider
+	// attack
 	addAndMakeVisible(attackSlider);
 	attackSlider.setSliderStyle(Slider::LinearVertical);
 	attackSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 20, 15);
-	// attack label
 	addAndMakeVisible(attackLabel);
 	attackLabel.setText("attack", dontSendNotification);
+	attackAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.treeState, "attack", attackSlider);
 
-	// decay slider
+	// decay
 	addAndMakeVisible(decaySlider);
 	decaySlider.setSliderStyle(Slider::LinearVertical);
 	decaySlider.setTextBoxStyle(Slider::TextBoxBelow, true, 20, 15);
-	// decay label
 	addAndMakeVisible(decayLabel);
 	decayLabel.setText("decay", dontSendNotification);
+	decayAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.treeState, "decay", decaySlider);
 
 	// sustain slider
 	addAndMakeVisible(sustainSlider);
 	sustainSlider.setSliderStyle(Slider::LinearVertical);
 	sustainSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 20, 15);
-	// sustain label
 	addAndMakeVisible(sustainLabel);
 	sustainLabel.setText("sustain", dontSendNotification);
+	sustainAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.treeState, "sustain", sustainSlider);
 
-	// release slider
+	// release 
 	addAndMakeVisible(releaseSlider);
 	releaseSlider.setSliderStyle(Slider::LinearVertical);
 	releaseSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 20, 15);
-	// release label
 	addAndMakeVisible(releaseLabel);
 	releaseLabel.setText("release", dontSendNotification);
+	releaseAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.treeState, "release", releaseSlider);
 }
 
 OscillatorEditor::~OscillatorEditor()
@@ -61,9 +61,9 @@ void OscillatorEditor::resized()
 	const int labelHeight = 20;
 	const int sliderHeight = getHeight() - labelHeight;
 	
-	Rectangle<int> area(getLocalBounds());
-	Rectangle<int> sliders (area.removeFromTop(sliderHeight));
-	Rectangle<int> labels(area.removeFromTop(labelHeight));
+	juce::Rectangle<int> area(getLocalBounds());
+	juce::Rectangle<int> sliders (area.removeFromTop(sliderHeight));
+	juce::Rectangle<int> labels(area.removeFromTop(labelHeight));
 
 	attackSlider.setBounds(sliders.removeFromLeft(sliderWidth));
 	attackLabel.setBounds(labels.removeFromLeft(labelWidth));

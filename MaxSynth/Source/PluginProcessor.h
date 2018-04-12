@@ -12,7 +12,6 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MaxSynth.h"
-#include "OscillatorEditor.h"
 
 //==============================================================================
 /**
@@ -56,6 +55,9 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+
+	//==============================================================================
+	AudioProcessorValueTreeState treeState;
 
 private:
 	Synthesiser synth;

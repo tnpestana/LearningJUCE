@@ -35,12 +35,6 @@ MaxSynthVoice::MaxSynthVoice()
 		frequency(0.0)
 {
 	sineEnv = new ADSR();
-
-	double sampleRate = getSampleRate();
-	sineEnv->setAttackRate(0.2 * sampleRate);
-	sineEnv->setDecayRate(1 * sampleRate);
-	sineEnv->setSustainLevel(0.1);
-	sineEnv->setReleaseRate(2 * sampleRate);
 }
 
 MaxSynthVoice::~MaxSynthVoice()
@@ -95,4 +89,13 @@ void MaxSynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startS
 double MaxSynthVoice::playSine()
 {
 	return sineOsc.sinewave(frequency);
+}
+
+void MaxSynthVoice::getEnvelopeParameters(float* attack, float* decay, float* sustain, float* release)
+{
+	double sampleRate = getSampleRate();
+	sineEnv->setAttackRate(*attack * sampleRate);
+	sineEnv->setDecayRate(*decay * sampleRate);
+	sineEnv->setSustainLevel(*sustain);
+	sineEnv->setReleaseRate(*release * sampleRate);
 }
