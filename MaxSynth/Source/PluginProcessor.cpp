@@ -25,10 +25,10 @@ MaxSynthAudioProcessor::MaxSynthAudioProcessor()
 		treeState(*this, nullptr)
 #endif
 {
-	treeState.createAndAddParameter("attack", "Attack", "attack", NormalisableRange<float>(0.1f, 5.0f), 0.1f, nullptr, nullptr);
-	treeState.createAndAddParameter("decay", "Decay", "decay", NormalisableRange<float>(0.1f, 5.0f), 0.1f, nullptr, nullptr);
-	treeState.createAndAddParameter("sustain", "Sustain", "sustain", NormalisableRange<float>(0.1f, 1.0f), 0.5f, nullptr, nullptr);
-	treeState.createAndAddParameter("release", "Release", "release", NormalisableRange<float>(0.1f, 5.0f), 0.1f, nullptr, nullptr);
+	treeState.createAndAddParameter("attack", "Attack", "attack", NormalisableRange<float>(0.0f, 5.0f), 0.1f, nullptr, nullptr);
+	treeState.createAndAddParameter("decay", "Decay", "decay", NormalisableRange<float>(0.0f, 5.0f), 0.1f, nullptr, nullptr);
+	treeState.createAndAddParameter("sustain", "Sustain", "sustain", NormalisableRange<float>(0.0f, 1.0f), 0.5f, nullptr, nullptr);
+	treeState.createAndAddParameter("release", "Release", "release", NormalisableRange<float>(0.0f, 5.0f), 0.1f, nullptr, nullptr);
 
 	synth.clearVoices();
 	for (int i = 0; i < 5; i++)
