@@ -42,7 +42,8 @@ public:
 	virtual void renderNextBlock(AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override;
 
 	//==============================================================================
-	double playSine();
+	double playSinewave();
+	double playSquarewave(); 
 	void getEnvelopeParameters(float* attack, float* decay, float* sustain, float* release);
 
 private:
