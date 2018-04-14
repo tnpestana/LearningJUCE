@@ -27,11 +27,11 @@ MaxSynthAudioProcessor::MaxSynthAudioProcessor()
 {
 	// Envelope parameters
 	NormalisableRange<float> attackRange (0.0f, 5.0f, 0.001f);
-	attackRange.setSkewForCentre(1.0);
 	NormalisableRange<float> decayRange (0.0f, 5.0f, 0.001f);
-	decayRange.setSkewForCentre(1.0);
 	NormalisableRange<float> sustainRange (0.0f, 1.0f, 0.001f);
 	NormalisableRange<float> releaseRange (0.0f, 5.0f, 0.001f);
+	attackRange.setSkewForCentre(1.0);
+	decayRange.setSkewForCentre(1.0);
 	releaseRange.setSkewForCentre(1.0);
 
 	treeState.createAndAddParameter("attack", "Attack", String(), attackRange, 0.1f, nullptr, nullptr);
@@ -44,8 +44,8 @@ MaxSynthAudioProcessor::MaxSynthAudioProcessor()
 	NormalisableRange<float> roomSizeRange (0.0f, 1.0f, 0.01f);
 	NormalisableRange<float> dampingRange (0.0f, 1.0f, 0.01f);
 
-	treeState.createAndAddParameter("dryWet", "DryWet", String(), dryWetRange, 1.0f, nullptr, nullptr);
-	treeState.createAndAddParameter("roomSize", "RoomSize", String(), roomSizeRange, 0.0f, nullptr, nullptr);
+	treeState.createAndAddParameter("dryWet", "DryWet", String(), dryWetRange, 0.5f, nullptr, nullptr);
+	treeState.createAndAddParameter("roomSize", "RoomSize", String(), roomSizeRange, 0.2f, nullptr, nullptr);
 	treeState.createAndAddParameter("damping", "Damping", String(), dampingRange, 0.0f, nullptr, nullptr);
 
 	treeState.state = ValueTree(Identifier("ReverbState"));

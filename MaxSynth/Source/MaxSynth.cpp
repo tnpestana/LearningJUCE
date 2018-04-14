@@ -80,14 +80,14 @@ void MaxSynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startS
 
 	for (int sample = 0; sample < numSamples; sample++)
 	{
-		double output = playSinewave() / 5;
+		double output = playSinewave();
 		double envelope = sineEnv->process() * output;
-		double loPassFilter = sineFilter.lores(envelope, 10000.0, 1);
-		double hiPassFilter = sineFilter.hires(loPassFilter, 100.0, 1);
+		/*double loPassFilter = sineFilter.lores(envelope, 10000.0, 1);
+		double hiPassFilter = sineFilter.hires(loPassFilter, 100.0, 1);*/
 
 		for (int channel = 0; channel < outputBuffer.getNumChannels(); channel++)
 		{
-			outputBuffer.addSample(channel, startSample, hiPassFilter * level);
+			outputBuffer.addSample(channel, startSample, envelope * level * 0.5);
 		}
 		startSample++;
 	}
@@ -114,7 +114,7 @@ void MaxSynthVoice::getEnvelopeParameters(float* attack, float* decay, float* su
 
 void MaxSynthVoice::getReverbParameters(float dryWet, float roomSize, float damping)
 {
-	reverbParameters.dryLevel = 1 - dryWet;
+	reverbParameters.dryLevel = 1.0f - dryWet;
 	reverbParameters.wetLevel = dryWet;
 	reverbParameters.roomSize = roomSize;
 	reverbParameters.damping = damping;
