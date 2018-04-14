@@ -103,13 +103,13 @@ double MaxSynthVoice::playSquarewave()
 	return sineOsc.square(frequency);
 }
 
-void MaxSynthVoice::getEnvelopeParameters(float* attack, float* decay, float* sustain, float* release)
+void MaxSynthVoice::getEnvelopeParameters(float attack, float decay, float sustain, float release)
 {
 	double sampleRate = getSampleRate();
-	sineEnv->setAttackRate(*attack * sampleRate);
-	sineEnv->setDecayRate(*decay * sampleRate);
-	sineEnv->setSustainLevel(*sustain);
-	sineEnv->setReleaseRate(*release * sampleRate);
+	sineEnv->setAttackRate(attack * sampleRate);
+	sineEnv->setDecayRate(decay * sampleRate);
+	sineEnv->setSustainLevel(sustain);
+	sineEnv->setReleaseRate(release * sampleRate);
 }
 
 void MaxSynthVoice::getReverbParameters(float dryWet, float roomSize, float damping)

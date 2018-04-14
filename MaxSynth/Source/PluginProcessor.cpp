@@ -166,10 +166,10 @@ void MaxSynthAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer
 	{
 		if (maxSynthVoice = dynamic_cast<MaxSynthVoice*>(synth.getVoice(i)))
 		{
-			maxSynthVoice->getEnvelopeParameters(treeState.getRawParameterValue("attack"),
-				treeState.getRawParameterValue("decay"),
-				treeState.getRawParameterValue("sustain"),
-				treeState.getRawParameterValue("release"));
+			maxSynthVoice->getEnvelopeParameters(*treeState.getRawParameterValue("attack"),
+				*treeState.getRawParameterValue("decay"),
+				*treeState.getRawParameterValue("sustain"),
+				*treeState.getRawParameterValue("release"));
 
 			maxSynthVoice->getReverbParameters(*treeState.getRawParameterValue("dryWet"),
 				*treeState.getRawParameterValue("roomSize"),
