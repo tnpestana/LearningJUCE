@@ -44,6 +44,9 @@
             file="Source/OscillatorEditor.cpp"/>
       <FILE id="noBjnH" name="OscillatorEditor.h" compile="0" resource="0"
             file="Source/OscillatorEditor.h"/>
+      <FILE id="IyZSd6" name="ReverbEditor.cpp" compile="1" resource="0"
+            file="Source/ReverbEditor.cpp"/>
+      <FILE id="mvQgEw" name="ReverbEditor.h" compile="0" resource="0" file="Source/ReverbEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

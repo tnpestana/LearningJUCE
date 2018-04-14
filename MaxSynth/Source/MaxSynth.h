@@ -45,10 +45,13 @@ public:
 	double playSinewave();
 	double playSquarewave(); 
 	void getEnvelopeParameters(float* attack, float* decay, float* sustain, float* release);
+	void getReverbParameters(float dryWet, float roomSize, float damping);
 
 private:
 	double frequency, level;
 	maxiOsc sineOsc;
 	maxiFilter sineFilter;
 	ADSR* sineEnv;
+	Reverb reverb;
+	Reverb::Parameters reverbParameters;
 };

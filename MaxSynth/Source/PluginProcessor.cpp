@@ -25,6 +25,7 @@ MaxSynthAudioProcessor::MaxSynthAudioProcessor()
 		treeState(*this, nullptr)
 #endif
 {
+	// Envelope parameters
 	NormalisableRange<float> attackRange (0.0f, 5.0f, 0.001f);
 	attackRange.setSkewForCentre(1.0);
 	NormalisableRange<float> decayRange (0.0f, 5.0f, 0.001f);
@@ -33,10 +34,21 @@ MaxSynthAudioProcessor::MaxSynthAudioProcessor()
 	NormalisableRange<float> releaseRange (0.0f, 5.0f, 0.001f);
 	releaseRange.setSkewForCentre(1.0);
 
-	treeState.createAndAddParameter("attack", "Attack", "attack", attackRange, 0.1f, nullptr, nullptr);
-	treeState.createAndAddParameter("decay", "Decay", "decay", decayRange, 0.1f, nullptr, nullptr);
-	treeState.createAndAddParameter("sustain", "Sustain", "sustain", sustainRange, 0.5f, nullptr, nullptr);
-	treeState.createAndAddParameter("release", "Release", "release", releaseRange, 0.1f, nullptr, nullptr);
+	treeState.createAndAddParameter("attack", "Attack", String(), attackRange, 0.1f, nullptr, nullptr);
+	treeState.createAndAddParameter("decay", "Decay", String(), decayRange, 0.1f, nullptr, nullptr);
+	treeState.createAndAddParameter("sustain", "Sustain", String(), sustainRange, 0.5f, nullptr, nullptr);
+	treeState.createAndAddParameter("release", "Release", String(), releaseRange, 0.1f, nullptr, nullptr);
+
+	// Reverb parameters
+	NormalisableRange<float> dryWetRange (0.0f, 1.0f, 0.01f);
+	NormalisableRange<float> roomSizeRange (0.0f, 1.0f, 0.01f);
+	NormalisableRange<float> dampingRange (0.0f, 1.0f, 0.01f);
+
+	treeState.createAndAddParameter("dryWet", "DryWet", String(), dryWetRange, 1.0f, nullptr, nullptr);
+	treeState.createAndAddParameter("roomSize", "RoomSize", String(), roomSizeRange, 0.0f, nullptr, nullptr);
+	treeState.createAndAddParameter("damping", "Damping", String(), dampingRange, 0.0f, nullptr, nullptr);
+
+	treeState.state = ValueTree(Identifier("ReverbState"));
 
 	synth.clearVoices();
 	for (int i = 0; i < 5; i++)
@@ -158,6 +170,10 @@ void MaxSynthAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer
 				treeState.getRawParameterValue("decay"),
 				treeState.getRawParameterValue("sustain"),
 				treeState.getRawParameterValue("release"));
+
+			maxSynthVoice->getReverbParameters(*treeState.getRawParameterValue("dryWet"),
+				*treeState.getRawParameterValue("roomSize"),
+				*treeState.getRawParameterValue("damping"));
 		}
 	}
 

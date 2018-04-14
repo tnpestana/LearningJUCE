@@ -13,11 +13,12 @@
 
 //==============================================================================
 MaxSynthAudioProcessorEditor::MaxSynthAudioProcessorEditor (MaxSynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), oscillator(p)
+    : AudioProcessorEditor (&p), processor (p), oscillator(p), reverb(p)
 {
-    setSize (200, 200);
+    setSize (200, 300);
 
 	addAndMakeVisible (&oscillator);
+	addAndMakeVisible (&reverb);
 }
 
 MaxSynthAudioProcessorEditor::~MaxSynthAudioProcessorEditor()
@@ -33,5 +34,8 @@ void MaxSynthAudioProcessorEditor::paint (Graphics& g)
 
 void MaxSynthAudioProcessorEditor::resized()
 {
-	oscillator.setBounds(getLocalBounds());
+	juce::Rectangle<int> area (getLocalBounds());
+
+	oscillator.setBounds(area.removeFromTop(200));
+	reverb.setBounds(area.removeFromTop(100));
 }

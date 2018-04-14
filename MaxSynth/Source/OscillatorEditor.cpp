@@ -49,8 +49,9 @@ OscillatorEditor::~OscillatorEditor()
 {
 }
 
-void OscillatorEditor::paint(Graphics &)
+void OscillatorEditor::paint(Graphics& g)
 {
+	g.fillAll(Colours::grey);
 }
 
 void OscillatorEditor::resized()

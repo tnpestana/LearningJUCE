@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "OscillatorEditor.h"
+#include "ReverbEditor.h"
 
 //==============================================================================
 /**
@@ -31,8 +32,9 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MaxSynthAudioProcessor& processor;
-
+	
 	OscillatorEditor oscillator;
+	ReverbEditor reverb;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MaxSynthAudioProcessorEditor)
 };

@@ -50,7 +50,7 @@ void MaxSynthVoice::startNote(int midiNoteNumber, float velocity, SynthesiserSou
 {
 	sineEnv->gate(true);
 	frequency = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
-	// level é um quinto do total (1/5 = 0.2) porque há 5 vozes em simultaneo
+
 	level = velocity;
 }
 
@@ -73,9 +73,15 @@ void MaxSynthVoice::controllerMoved(int controllerNumber, int newControllerValue
 
 void MaxSynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
 {
+	if (outputBuffer.getNumChannels() == 1)
+		reverb.processMono(outputBuffer.getWritePointer(startSample), numSamples);
+	else if (outputBuffer.getNumChannels() == 2)
+		reverb.processStereo(outputBuffer.getWritePointer(startSample), outputBuffer.getWritePointer(startSample + 1), numSamples);
+
 	for (int sample = 0; sample < numSamples; sample++)
 	{
-		double envelope = sineEnv->process() * playSquarewave();
+		double output = playSinewave() / 5;
+		double envelope = sineEnv->process() * output;
 		double loPassFilter = sineFilter.lores(envelope, 10000.0, 1);
 		double hiPassFilter = sineFilter.hires(loPassFilter, 100.0, 1);
 
@@ -104,4 +110,14 @@ void MaxSynthVoice::getEnvelopeParameters(float* attack, float* decay, float* su
 	sineEnv->setDecayRate(*decay * sampleRate);
 	sineEnv->setSustainLevel(*sustain);
 	sineEnv->setReleaseRate(*release * sampleRate);
+}
+
+void MaxSynthVoice::getReverbParameters(float dryWet, float roomSize, float damping)
+{
+	reverbParameters.dryLevel = 1 - dryWet;
+	reverbParameters.wetLevel = dryWet;
+	reverbParameters.roomSize = roomSize;
+	reverbParameters.damping = damping;
+
+	reverb.setParameters(reverbParameters);
 }
