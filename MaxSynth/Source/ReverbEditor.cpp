@@ -30,7 +30,7 @@ ReverbEditor::ReverbEditor(MaxSynthAudioProcessor& p)
 	roomSizeSlider.setRange(0, 1, 0.01);
 
 	addAndMakeVisible(roomSizeLabel);
-	roomSizeLabel.setText("room Size", dontSendNotification);
+	roomSizeLabel.setText("room size", dontSendNotification);
 	roomSizeLabel.setJustificationType(Justification::centred);
 	roomSizeAttachment = new AudioProcessorValueTreeState::SliderAttachment(p.treeState,
 		"roomSize", roomSizeSlider);

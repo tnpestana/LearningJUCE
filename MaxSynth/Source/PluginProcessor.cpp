@@ -30,7 +30,7 @@ MaxSynthAudioProcessor::MaxSynthAudioProcessor()
 	attackRange.setSkewForCentre(1.0);
 	NormalisableRange<float> decayRange (0.0f, 5.0f, 0.001f);
 	decayRange.setSkewForCentre(1.0);
-	NormalisableRange<float> sustainRange (0.0f, 5.0f, 0.001f);
+	NormalisableRange<float> sustainRange (0.0f, 1.0f, 0.001f);
 	NormalisableRange<float> releaseRange (0.0f, 5.0f, 0.001f);
 	releaseRange.setSkewForCentre(1.0);
 
