@@ -31,5 +31,9 @@ private:
     // access the processor object that created it.
     TnpDelayAudioProcessor& processor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpDelayAudioProcessorEditor)
+	Slider delayTimeSlider;
+	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
+
+	//==============================================================================
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TnpDelayAudioProcessorEditor)
 };

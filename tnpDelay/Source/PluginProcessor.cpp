@@ -21,20 +21,22 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+	treeState(*this, nullptr)
 #endif
 {
-	// delay in seconds.
-	delayLength = 0.2;
-
-	wetMix = 0.5;
-	feedback = 0.5;
-
-	// delay in samples.
-	delayBufferLength = 1;
-
+	// Default values:
+	delayLength = 1;		// in seconds
+	wetMix = 0.5;			// ratio
+	feedback = 0.5;			// percentage
+	delayBufferLength = 1;	// in samples
 	delayReadPosition = 0;
 	delayWritePosition = 0;
+
+	NormalisableRange<float> delayTimeRange (0.f, 2.f, 0.01);
+	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
+
+	treeState.state = ValueTree(Identifier("DelayState"));
 }
 
 TnpDelayAudioProcessor::~TnpDelayAudioProcessor()
@@ -104,8 +106,25 @@ void TnpDelayAudioProcessor::changeProgramName (int index, const String& newName
 }
 
 //==============================================================================
+void TnpDelayAudioProcessor::setupDelay()
+{
+	// Delay processing.
+	delayLength = *treeState.getRawParameterValue("delayTime");
+
+	delayInSamples = delayLength * sampleRate;
+
+	delayReadPosition = (int)(delayWritePosition - delayInSamples);
+
+	// Wrap delay read position to the buffers range.
+	if (delayReadPosition < 0)
+		delayReadPosition += delayBufferLength;
+}
+
+//==============================================================================
 void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+	this->sampleRate = sampleRate;
+
 	// Set max delay in samples.
 	delayBufferLength = (int)(2.0 * sampleRate); 
 	if (delayBufferLength < 1)
@@ -114,12 +133,7 @@ void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 	delayBuffer.setSize(2, delayBufferLength);
 	delayBuffer.clear();
 
-	delayInSamples = delayLength * sampleRate;
-
-	delayReadPosition = (int)(delayWritePosition - delayInSamples);
-	// Wrap delay read position to the buffers range.
-	if (delayReadPosition < 0)
-		delayReadPosition += delayBufferLength;
+	setupDelay();
 }
 
 void TnpDelayAudioProcessor::releaseResources()
@@ -174,6 +188,9 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
         auto* channelData = buffer.getWritePointer (channel);
 		auto* delayData = delayBuffer.getWritePointer (channel);
 		
+		if (delayLength != *treeState.getRawParameterValue("delayTime"))
+			setupDelay();
+
 		// Temporarily store the pointer values.
 		drp = delayReadPosition;
 		dwp = delayWritePosition;

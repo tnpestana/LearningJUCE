@@ -56,15 +56,23 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 	//==============================================================================
+	void setupDelay();
+
+	//==============================================================================
 	float delayLength, delayInSamples;
 	float wetMix;
 	float feedback;
 
-private:
 	//==============================================================================
+	AudioProcessorValueTreeState treeState;
+
+private:
+
 	AudioSampleBuffer delayBuffer;
 	int delayBufferLength;
 	int delayReadPosition, delayWritePosition;
+
+	int sampleRate;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpDelayAudioProcessor)
