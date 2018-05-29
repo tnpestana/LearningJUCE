@@ -24,6 +24,16 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
                        )
 #endif
 {
+	// delay in seconds.
+	delayLength = 0.5;
+
+	wetMix = 0.5;
+
+	// delay in samples.
+	delayBufferLength = 1;
+
+	delayReadPosition = 0;
+	delayWritePosition = 0;
 }
 
 TnpDelayAudioProcessor::~TnpDelayAudioProcessor()
@@ -95,8 +105,18 @@ void TnpDelayAudioProcessor::changeProgramName (int index, const String& newName
 //==============================================================================
 void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+	// 2 second max delay.
+	delayBufferLength = (int)(2.0 * sampleRate); 
+	if (delayBufferLength < 1)
+		delayBufferLength = 1;
+
+	delayBuffer.setSize(2, delayBufferLength);
+	delayBuffer.clear();
+
+	float delayInSamples = delayLength * sampleRate;
+
+	delayReadPosition = (int)(delayWritePosition - delayInSamples +
+		delayBufferLength) % delayBufferLength;
 }
 
 void TnpDelayAudioProcessor::releaseResources()
@@ -144,18 +164,30 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
+	int drp, dwp;
+
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
+		auto* delayData = delayBuffer.getWritePointer (channel);
 
-        // ..do something to the data...
+		drp = delayReadPosition;
+		dwp = delayWritePosition;
+		
+		for (int sample = 0; sample < buffer.getNumSamples(); sample++)
+		{
+			delayData[sample] = channelData[sample];
+			float input = channelData[sample];
+			channelData[sample] = (0.5 * input) + (0.5 * delayData[drp]);
+			delayData[drp] = input;
+
+			if (drp++ > delayBuffer.getNumSamples())
+				drp = 0;
+		}
     }
+
+	delayReadPosition = drp;
+	delayWritePosition = dwp;
 }
 
 //==============================================================================
