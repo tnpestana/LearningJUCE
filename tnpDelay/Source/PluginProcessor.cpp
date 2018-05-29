@@ -28,6 +28,7 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
 	delayLength = 0.5;
 
 	wetMix = 0.5;
+	feedback = 0.5;
 
 	// delay in samples.
 	delayBufferLength = 1;
@@ -184,7 +185,7 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
 			float yn = delayData[drp];
 			
 			// Step 2 - Calculate mixed output.
-			channelData[sample] = channelData[sample] + yn;
+			channelData[sample] = channelData[sample] + feedback * yn;
 
 			// Step 3 - Write input data into delay line at write location.
 			delayData[drp] = channelData[sample];
