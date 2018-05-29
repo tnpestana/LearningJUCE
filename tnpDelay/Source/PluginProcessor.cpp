@@ -105,7 +105,7 @@ void TnpDelayAudioProcessor::changeProgramName (int index, const String& newName
 //==============================================================================
 void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-	// 2 second max delay.
+	// Set max delay in samples.
 	delayBufferLength = (int)(2.0 * sampleRate); 
 	if (delayBufferLength < 1)
 		delayBufferLength = 1;
@@ -115,8 +115,10 @@ void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 
 	float delayInSamples = delayLength * sampleRate;
 
-	delayReadPosition = (int)(delayWritePosition - delayInSamples +
-		delayBufferLength) % delayBufferLength;
+	delayReadPosition = (int)(delayWritePosition - delayInSamples);
+	// Wrap delay read position to the buffers range.
+	if (delayReadPosition < 0)
+		delayReadPosition += delayBufferLength;
 }
 
 void TnpDelayAudioProcessor::releaseResources()
@@ -170,19 +172,27 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
     {
         auto* channelData = buffer.getWritePointer (channel);
 		auto* delayData = delayBuffer.getWritePointer (channel);
-
+		
+		// Temporarily store the pointer values.
 		drp = delayReadPosition;
 		dwp = delayWritePosition;
 		
 		for (int sample = 0; sample < buffer.getNumSamples(); sample++)
 		{
-			delayData[sample] = channelData[sample];
-			float input = channelData[sample];
-			channelData[sample] = (0.5 * input) + (0.5 * delayData[drp]);
-			delayData[drp] = input;
+			// Will Pirkle:
+			// Step 1 - Read delayed audio data.
+			float yn = delayData[drp];
+			
+			// Step 2 - Calculate mixed output.
+			channelData[sample] = channelData[sample] + yn;
 
-			if (drp++ > delayBuffer.getNumSamples())
+			// Step 3 - Write input data into delay line at write location.
+			delayData[drp] = channelData[sample];
+			
+			if (++drp >= delayBuffer.getNumSamples())
 				drp = 0;
+			if (++dwp >= delayBuffer.getNumSamples())
+				dwp = 0;
 		}
     }
 
