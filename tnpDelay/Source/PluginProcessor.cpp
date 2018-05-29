@@ -25,7 +25,7 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
 #endif
 {
 	// delay in seconds.
-	delayLength = 0.5;
+	delayLength = 0.2;
 
 	wetMix = 0.5;
 	feedback = 0.5;
@@ -114,7 +114,7 @@ void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 	delayBuffer.setSize(2, delayBufferLength);
 	delayBuffer.clear();
 
-	float delayInSamples = delayLength * sampleRate;
+	delayInSamples = delayLength * sampleRate;
 
 	delayReadPosition = (int)(delayWritePosition - delayInSamples);
 	// Wrap delay read position to the buffers range.
@@ -190,9 +190,9 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
 			// Step 3 - Write input data into delay line at write location.
 			delayData[drp] = channelData[sample];
 			
-			if (++drp >= delayBuffer.getNumSamples())
+			if (++drp >= delayInSamples)
 				drp = 0;
-			if (++dwp >= delayBuffer.getNumSamples())
+			if (++dwp >= delayInSamples)
 				dwp = 0;
 		}
     }

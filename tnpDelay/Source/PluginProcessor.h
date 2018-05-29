@@ -56,7 +56,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 	//==============================================================================
-	float delayLength;
+	float delayLength, delayInSamples;
 	float wetMix;
 	float feedback;
 
