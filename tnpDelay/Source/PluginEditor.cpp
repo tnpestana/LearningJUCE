@@ -21,12 +21,21 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
 
 	addAndMakeVisible(delayTimeSlider);
 	delayTimeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "delayTime", delayTimeSlider);
+	addAndMakeVisible(delayTimeLabel);
+	delayTimeLabel.setText("time", dontSendNotification);
+	delayTimeLabel.setJustificationType(Justification::centred);
 
 	addAndMakeVisible(feedbackSlider);
 	feedbackAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "feedback", feedbackSlider);
+	addAndMakeVisible(feedbackLabel);
+	feedbackLabel.setText("feedback", dontSendNotification);
+	feedbackLabel.setJustificationType(Justification::centred);
 
 	addAndMakeVisible(wetMixSlider);
 	wetMixAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "wetMix", wetMixSlider);
+	addAndMakeVisible(wetMixLabel);
+	wetMixLabel.setText("dry/wet", dontSendNotification);
+	wetMixLabel.setJustificationType(Justification::centred);
 }
 
 TnpDelayAudioProcessorEditor::~TnpDelayAudioProcessorEditor()
@@ -44,7 +53,16 @@ void TnpDelayAudioProcessorEditor::paint (Graphics& g)
 void TnpDelayAudioProcessorEditor::resized()
 {
 	juce::Rectangle<int> area(getLocalBounds());
-	wetMixSlider.setBounds(area.removeFromTop(getHeight() / 3));
-	delayTimeSlider.setBounds(area.removeFromTop(getHeight() / 2));
-	feedbackSlider.setBounds(area);
+
+	juce::Rectangle<int> wetMixArea(area.removeFromTop(getHeight() / 3));
+	wetMixLabel.setBounds(wetMixArea.removeFromLeft(100));
+	wetMixSlider.setBounds(wetMixArea);
+
+	juce::Rectangle<int> delayTimeArea(area.removeFromTop(area.getHeight() / 2));
+	delayTimeLabel.setBounds(delayTimeArea.removeFromLeft(100));
+	delayTimeSlider.setBounds(delayTimeArea);
+
+	juce::Rectangle<int> feedbackArea(area);
+	feedbackLabel.setBounds(feedbackArea.removeFromLeft(100));
+	feedbackSlider.setBounds(feedbackArea);
 }

@@ -33,12 +33,15 @@ private:
 
 	Slider delayTimeSlider;
 	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
+	Label delayTimeLabel;
 
 	Slider feedbackSlider;
 	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
+	Label feedbackLabel;
 
 	Slider wetMixSlider;
 	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> wetMixAttachment;
+	Label wetMixLabel;
 
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TnpDelayAudioProcessorEditor)
