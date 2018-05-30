@@ -17,7 +17,7 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (400, 200);
 
 	backgroundImage = ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
 
@@ -51,7 +51,9 @@ void TnpDelayAudioProcessorEditor::paint (Graphics& g)
 	g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
 	g.drawImageAt(backgroundImage, 0, 0);
 	getLookAndFeel().setColour(Label::textColourId, Colours::black);
-	getLookAndFeel().setColour(Slider::backgroundColourId, Colours::grey);
+	getLookAndFeel().setColour(Slider::backgroundColourId, Colours::whitesmoke);
+	getLookAndFeel().setColour(Slider::trackColourId, Colours::darkslategrey);
+	getLookAndFeel().setColour(Slider::thumbColourId, Colours::black);
 
 	// getLookAndFeel() doesn't seem to work for setting sliders text boxes colours
 	// so I set them individually
