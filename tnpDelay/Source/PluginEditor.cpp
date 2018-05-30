@@ -19,6 +19,8 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
     // editor's size to whatever you need it to be.
     setSize (400, 300);
 
+	backgroundImage = ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
+
 	addAndMakeVisible(delayTimeSlider);
 	delayTimeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "delayTime", delayTimeSlider);
 	addAndMakeVisible(delayTimeLabel);
@@ -47,7 +49,15 @@ void TnpDelayAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
 	g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
+	g.drawImageAt(backgroundImage, 0, 0);
+	getLookAndFeel().setColour(Label::textColourId, Colours::black);
+	getLookAndFeel().setColour(Slider::backgroundColourId, Colours::grey);
 
+	// getLookAndFeel() doesn't seem to work for setting sliders text boxes colours
+	// so I set them individually
+	delayTimeSlider.setColour(Slider::textBoxTextColourId, Colours::black);
+	feedbackSlider.setColour(Slider::textBoxTextColourId, Colours::black);
+	wetMixSlider.setColour(Slider::textBoxTextColourId, Colours::black);
 }
 
 void TnpDelayAudioProcessorEditor::resized()

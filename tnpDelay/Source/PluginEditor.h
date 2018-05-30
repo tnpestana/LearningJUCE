@@ -31,6 +31,8 @@ private:
     // access the processor object that created it.
     TnpDelayAudioProcessor& processor;
 
+	juce::Image backgroundImage;
+
 	Slider delayTimeSlider;
 	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
 	Label delayTimeLabel;

@@ -2,6 +2,9 @@
 
 <JUCERPROJECT id="PTp3P7" name="tnpDelay" projectType="audioplug" jucerVersion="5.3.2">
   <MAINGROUP id="nS7awJ" name="tnpDelay">
+    <GROUP id="{2FD656E6-A563-96C6-6E26-43966C19540A}" name="Media">
+      <FILE id="ClD5DA" name="background.jpg" compile="0" resource="1" file="../../../../../../Pictures/background.jpg"/>
+    </GROUP>
     <GROUP id="{600BAB3F-D48C-1D32-34DE-F52190FBAB71}" name="Source">
       <FILE id="EyShwx" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
