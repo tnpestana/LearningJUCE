@@ -26,7 +26,7 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
 #endif
 {
 	// Default values:
-	delayLength = 1;		// in seconds
+	delayLength = 0.5;		// in seconds
 	wetMix = 0.5;			// ratio
 	feedback = 0.5;			// percentage
 	delayBufferLength = 1;	// in samples
@@ -37,6 +37,8 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
 	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
 	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
 	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, 0.5f, nullptr, nullptr);
+	NormalisableRange<float> wetMixRange(0.f, 1.f, 0.001f);
+	treeState.createAndAddParameter("wetMix", "WetMix", String(), wetMixRange, 0.5f, nullptr, nullptr);
 
 	treeState.state = ValueTree(Identifier("DelayState"));
 }
@@ -113,6 +115,7 @@ void TnpDelayAudioProcessor::setupDelay()
 	// Delay processing.
 	delayLength = *treeState.getRawParameterValue("delayTime");
 	feedback = *treeState.getRawParameterValue("feedback");
+	wetMix = *treeState.getRawParameterValue("wetMix");
 
 	delayInSamples = delayLength * sampleRate;
 
@@ -192,7 +195,8 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
 		auto* delayData = delayBuffer.getWritePointer (channel);
 		
 		if (delayLength != *treeState.getRawParameterValue("delayTime") ||
-			feedback != *treeState.getRawParameterValue("feedback"))
+			feedback != *treeState.getRawParameterValue("feedback") ||
+			wetMix != *treeState.getRawParameterValue("wetMix"))
 		{
 			setupDelay();
 		}
@@ -208,7 +212,7 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
 			
 			// Step 2 - Calculate mixed output.
 			if (delayLength != 0.0f)
-				channelData[sample] = channelData[sample] + feedback * yn;
+				channelData[sample] = (1 - wetMix) * channelData[sample] + wetMix * (channelData[sample] + (feedback * yn));
 
 			// Step 3 - Write input data into delay line at write location.
 			delayData[drp] = channelData[sample];

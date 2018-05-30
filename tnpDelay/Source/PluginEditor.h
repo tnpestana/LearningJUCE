@@ -37,6 +37,9 @@ private:
 	Slider feedbackSlider;
 	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
 
+	Slider wetMixSlider;
+	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> wetMixAttachment;
+
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TnpDelayAudioProcessorEditor)
 };
