@@ -33,8 +33,10 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
 	delayReadPosition = 0;
 	delayWritePosition = 0;
 
-	NormalisableRange<float> delayTimeRange (0.f, 2.f, 0.01);
+	NormalisableRange<float> delayTimeRange (0.f, 2.f, 0.001f);
 	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
+	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
+	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, 0.5f, nullptr, nullptr);
 
 	treeState.state = ValueTree(Identifier("DelayState"));
 }
@@ -110,6 +112,7 @@ void TnpDelayAudioProcessor::setupDelay()
 {
 	// Delay processing.
 	delayLength = *treeState.getRawParameterValue("delayTime");
+	feedback = *treeState.getRawParameterValue("feedback");
 
 	delayInSamples = delayLength * sampleRate;
 
@@ -188,9 +191,11 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
         auto* channelData = buffer.getWritePointer (channel);
 		auto* delayData = delayBuffer.getWritePointer (channel);
 		
-		if (delayLength != *treeState.getRawParameterValue("delayTime"))
+		if (delayLength != *treeState.getRawParameterValue("delayTime") ||
+			feedback != *treeState.getRawParameterValue("feedback"))
+		{
 			setupDelay();
-
+		}
 		// Temporarily store the pointer values.
 		drp = delayReadPosition;
 		dwp = delayWritePosition;
@@ -202,7 +207,8 @@ void TnpDelayAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
 			float yn = delayData[drp];
 			
 			// Step 2 - Calculate mixed output.
-			channelData[sample] = channelData[sample] + feedback * yn;
+			if (delayLength != 0.0f)
+				channelData[sample] = channelData[sample] + feedback * yn;
 
 			// Step 3 - Write input data into delay line at write location.
 			delayData[drp] = channelData[sample];

@@ -21,6 +21,9 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
 
 	addAndMakeVisible(delayTimeSlider);
 	delayTimeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "delayTime", delayTimeSlider);
+
+	addAndMakeVisible(feedbackSlider);
+	feedbackAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "feedback", feedbackSlider);
 }
 
 TnpDelayAudioProcessorEditor::~TnpDelayAudioProcessorEditor()
@@ -37,5 +40,7 @@ void TnpDelayAudioProcessorEditor::paint (Graphics& g)
 
 void TnpDelayAudioProcessorEditor::resized()
 {
-	delayTimeSlider.setBounds(getLocalBounds());
+	juce::Rectangle<int> area(getLocalBounds());
+	delayTimeSlider.setBounds(area.removeFromTop(getHeight() / 2));
+	feedbackSlider.setBounds(area);
 }

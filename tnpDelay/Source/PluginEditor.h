@@ -34,6 +34,9 @@ private:
 	Slider delayTimeSlider;
 	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
 
+	Slider feedbackSlider;
+	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
+
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TnpDelayAudioProcessorEditor)
 };
