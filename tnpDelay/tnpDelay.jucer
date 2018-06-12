@@ -6,6 +6,9 @@
       <FILE id="ClD5DA" name="background.jpg" compile="0" resource="1" file="../../../../../../Pictures/background.jpg"/>
     </GROUP>
     <GROUP id="{600BAB3F-D48C-1D32-34DE-F52190FBAB71}" name="Source">
+      <FILE id="hdMyTE" name="TnpDelayLine.cpp" compile="1" resource="0"
+            file="Source/TnpDelayLine.cpp"/>
+      <FILE id="LCoWo9" name="TnpDelayLine.h" compile="0" resource="0" file="Source/TnpDelayLine.h"/>
       <FILE id="EyShwx" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="z3WiFm" name="PluginProcessor.h" compile="0" resource="0"
