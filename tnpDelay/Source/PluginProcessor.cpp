@@ -22,17 +22,10 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
                        ),
-	treeState(*this, nullptr)
+	treeState(*this, nullptr),
+	delay(treeState)
 #endif
 {
-	NormalisableRange<float> delayTimeRange (0.f, 2.f, 0.001f);
-	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
-	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, 0.5f, nullptr, nullptr);
-	NormalisableRange<float> wetMixRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("wetMix", "WetMix", String(), wetMixRange, 0.5f, nullptr, nullptr);
-
-	treeState.state = ValueTree(Identifier("DelayState"));
 }
 
 TnpDelayAudioProcessor::~TnpDelayAudioProcessor()
@@ -105,9 +98,7 @@ void TnpDelayAudioProcessor::changeProgramName (int index, const String& newName
 void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 	delay.prepareToPlay(sampleRate);
-	delay.setupDelay(*treeState.getRawParameterValue("delayTime"),
-		*treeState.getRawParameterValue("feedback"),
-		*treeState.getRawParameterValue("wetMix"));
+	delay.setupDelay();
 }
 
 void TnpDelayAudioProcessor::releaseResources()
@@ -155,6 +146,7 @@ void TnpDelayAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer
 	for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
 		buffer.clear(i, 0, buffer.getNumSamples());
 
+	//delay.setupDelay();
 	delay.processAudio(buffer);
 }
 

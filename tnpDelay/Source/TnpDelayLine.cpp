@@ -10,17 +10,27 @@
 
 #include "TnpDelayLine.h"
 
-TnpDelayLine::TnpDelayLine()
+TnpDelayLine::TnpDelayLine(AudioProcessorValueTreeState& treeState)
+	:	treeState(treeState)
 {
-	// Default values:
+	// zero everything
 	buffer = nullptr;
-	delayLength = 0.5;		// in seconds
-	wetMix = 0.5;			// ratio
-	feedback = 0.5;			// percentage
+	delayLength = 0.0;		// in seconds
+	wetMix = 0.0;			// ratio
+	feedback = 0.0;			// percentage
 	bufferSize = 1;			// in samples
 	delayReadPosition = 0;
 	delayWritePosition = 0;
 	sampleRate = 0;
+
+	NormalisableRange<float> delayTimeRange(0.f, 2.f, 0.001f);
+	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
+	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
+	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, 1.f, nullptr, nullptr);
+	NormalisableRange<float> wetMixRange(0.f, 1.f, 0.001f);
+	treeState.createAndAddParameter("wetMix", "WetMix", String(), wetMixRange, 0.5f, nullptr, nullptr);
+
+	treeState.state = ValueTree(Identifier("DelayState"));
 }
 
 TnpDelayLine::~TnpDelayLine()
@@ -28,20 +38,28 @@ TnpDelayLine::~TnpDelayLine()
 	delete[] buffer;
 }
 
-void TnpDelayLine::setupDelay(float time, float feedback, float wet)
+void TnpDelayLine::setupDelay()
 {
-	// Delay processing.
-	delayLength = time;
-	feedback = feedback;
-	wetMix = wet;
+	double targetDelayLength = *treeState.getRawParameterValue("delayTime");
+	if (delayLength != targetDelayLength)
+	{
+		delayLength = targetDelayLength;
+		delayInSamples = delayLength * sampleRate;
 
-	delayInSamples = delayLength * sampleRate;
+		delayReadPosition = (int)(delayWritePosition - delayInSamples);
 
-	delayReadPosition = (int)(delayWritePosition - delayInSamples);
+		// Wrap delay read position to the buffers range.
+		if (delayReadPosition < 0)
+			delayReadPosition += bufferSize;
+	}
 
-	// Wrap delay read position to the buffers range.
-	if (delayReadPosition < 0)
-		delayReadPosition += bufferSize;
+	double targetFeedback = *treeState.getRawParameterValue("feedback");
+	if (feedback != targetFeedback)
+		feedback = targetFeedback;
+
+	double targetWetMix = *treeState.getRawParameterValue("wetMix");
+	if (wetMix != targetWetMix)
+		wetMix = targetWetMix;
 }
 
 void TnpDelayLine::prepareToPlay(double sampleRate)
@@ -60,6 +78,8 @@ void TnpDelayLine::prepareToPlay(double sampleRate)
 
 bool TnpDelayLine::processAudio(AudioBuffer<float>& inputBuffer)
 {
+	setupDelay();
+
 	int drp, dwp;
 
 	for (int channel = 0; channel < inputBuffer.getNumChannels(); ++channel)
@@ -72,6 +92,8 @@ bool TnpDelayLine::processAudio(AudioBuffer<float>& inputBuffer)
 
 		for (int sample = 0; sample < inputBuffer.getNumSamples(); sample++)
 		{
+
+
 			// Will Pirkle:
 			// Step 1 - Read delayed audio data.
 			float yn = buffer[drp];
