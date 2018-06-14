@@ -24,9 +24,9 @@ TnpDelayLine::TnpDelayLine(AudioProcessorValueTreeState& treeState)
 	sampleRate = 0;
 
 	NormalisableRange<float> delayTimeRange(0.f, 2.f, 0.001f);
-	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
+	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.f, nullptr, nullptr);
 	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, 1.f, nullptr, nullptr);
+	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, .5f, nullptr, nullptr);
 	NormalisableRange<float> wetMixRange(0.f, 1.f, 0.001f);
 	treeState.createAndAddParameter("wetMix", "WetMix", String(), wetMixRange, 0.5f, nullptr, nullptr);
 
@@ -40,10 +40,9 @@ TnpDelayLine::~TnpDelayLine()
 
 void TnpDelayLine::setupDelay()
 {
-	double targetDelayLength = *treeState.getRawParameterValue("delayTime");
-	if (delayLength != targetDelayLength)
+	if (delayLength != *treeState.getRawParameterValue("delayTime"))
 	{
-		delayLength = targetDelayLength;
+		delayLength = *treeState.getRawParameterValue("delayTime");
 		delayInSamples = delayLength * sampleRate;
 
 		delayReadPosition = (int)(delayWritePosition - delayInSamples);
@@ -53,13 +52,10 @@ void TnpDelayLine::setupDelay()
 			delayReadPosition += bufferSize;
 	}
 
-	double targetFeedback = *treeState.getRawParameterValue("feedback");
-	if (feedback != targetFeedback)
-		feedback = targetFeedback;
-
-	double targetWetMix = *treeState.getRawParameterValue("wetMix");
-	if (wetMix != targetWetMix)
-		wetMix = targetWetMix;
+	if (feedback = *treeState.getRawParameterValue("feedback"))
+		feedback = *treeState.getRawParameterValue("feedback");
+	if (wetMix = *treeState.getRawParameterValue("wetMix"))
+		wetMix = *treeState.getRawParameterValue("wetMix");
 }
 
 void TnpDelayLine::prepareToPlay(double sampleRate)
@@ -72,48 +68,32 @@ void TnpDelayLine::prepareToPlay(double sampleRate)
 		bufferSize = 1;
 
 	buffer = new float[bufferSize];
-	if (buffer != nullptr)
-		memset(buffer, 0, bufferSize);
+	memset(buffer, 0, bufferSize);
+
+	setupDelay();
 }
 
-bool TnpDelayLine::processAudio(AudioBuffer<float>& inputBuffer)
+float TnpDelayLine::processAudio(int inputBufferSize, float* inputBuffer)
 {
-	setupDelay();
+	float yn = buffer[delayReadPosition];
 
-	int drp, dwp;
+	float xn = *inputBuffer;
 
-	for (int channel = 0; channel < inputBuffer.getNumChannels(); ++channel)
-	{
-		float* channelData = inputBuffer.getWritePointer(channel);
+	if (delayLength == 0)
+		yn = xn;
 
-		// Temporarily store the pointer values.
-		drp = delayReadPosition;
-		dwp = delayWritePosition;
+	buffer[delayWritePosition] = xn + feedback * yn;
 
-		for (int sample = 0; sample < inputBuffer.getNumSamples(); sample++)
-		{
+	float output = (xn * (1 - wetMix)) + (yn * wetMix);
 
+	*inputBuffer = output;
 
-			// Will Pirkle:
-			// Step 1 - Read delayed audio data.
-			float yn = buffer[drp];
+	delayReadPosition++;
+	if (delayReadPosition >= bufferSize)
+		delayReadPosition = 0;
+	delayWritePosition++;
+	if (delayWritePosition >= bufferSize)
+		delayWritePosition = 0;
 
-			// Step 2 - Calculate mixed output.
-			if (delayLength != 0.0f)
-				channelData[sample] = (1 - wetMix) * channelData[sample] + wetMix * (channelData[sample] + (feedback * yn));
-
-			// Step 3 - Write input data into delay line at write location.
-			buffer[drp] = channelData[sample];
-
-			if (++drp >= delayInSamples)
-				drp = 0;
-			if (++dwp >= delayInSamples)
-				dwp = 0;
-		}
-	}
-
-	delayReadPosition = drp;
-	delayWritePosition = dwp;
-
-	return true;
+	return output;
 }

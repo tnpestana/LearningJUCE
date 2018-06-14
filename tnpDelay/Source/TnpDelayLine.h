@@ -23,7 +23,7 @@ public:
 
 	//==============================================================================
 	void prepareToPlay(double);
-	bool processAudio(AudioBuffer<float>&);
+	float processAudio(int inputBufferSize, float* inputBufferL);
 
 private:
 	AudioProcessorValueTreeState& treeState;

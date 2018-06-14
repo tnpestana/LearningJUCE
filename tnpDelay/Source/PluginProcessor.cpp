@@ -98,7 +98,6 @@ void TnpDelayAudioProcessor::changeProgramName (int index, const String& newName
 void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 	delay.prepareToPlay(sampleRate);
-	delay.setupDelay();
 }
 
 void TnpDelayAudioProcessor::releaseResources()
@@ -146,8 +145,16 @@ void TnpDelayAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer
 	for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
 		buffer.clear(i, 0, buffer.getNumSamples());
 
-	//delay.setupDelay();
-	delay.processAudio(buffer);
+	delay.setupDelay();
+	for (int sample = 0; sample < buffer.getNumSamples(); sample++)
+	{
+
+		float* outputDataL = buffer.getWritePointer(0, sample);
+		float* outputDataR = buffer.getWritePointer(1, sample);
+		*outputDataL = delay.processAudio(buffer.getNumSamples(), outputDataL);
+		*outputDataR = *outputDataL;
+
+	}
 }
 
 //==============================================================================
