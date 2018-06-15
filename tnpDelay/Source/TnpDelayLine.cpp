@@ -10,27 +10,18 @@
 
 #include "TnpDelayLine.h"
 
-TnpDelayLine::TnpDelayLine(AudioProcessorValueTreeState& treeState)
-	:	treeState(treeState)
+TnpDelayLine::TnpDelayLine()
 {
 	// zero everything
 	buffer = nullptr;
 	delayLength = 0.0;		// in seconds
-	wetMix = 0.0;			// ratio
-	feedback = 0.0;			// percentage
-	bufferSize = 1;			// in samples
+	bufferSize = 0;	
 	delayReadPosition = 0;
 	delayWritePosition = 0;
 	sampleRate = 0;
-
-	NormalisableRange<float> delayTimeRange(0.f, 2.f, 0.001f);
-	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.f, nullptr, nullptr);
-	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, .5f, nullptr, nullptr);
-	NormalisableRange<float> wetMixRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("wetMix", "WetMix", String(), wetMixRange, 0.5f, nullptr, nullptr);
-
-	treeState.state = ValueTree(Identifier("DelayState"));
+	feedback = 0.0;
+	wetMix = 0.0;
+	
 }
 
 TnpDelayLine::~TnpDelayLine()
@@ -38,62 +29,94 @@ TnpDelayLine::~TnpDelayLine()
 	delete[] buffer;
 }
 
-void TnpDelayLine::setupDelay()
+void TnpDelayLine::resetDelay()
 {
-	if (delayLength != *treeState.getRawParameterValue("delayTime"))
-	{
-		delayLength = *treeState.getRawParameterValue("delayTime");
-		delayInSamples = delayLength * sampleRate;
+	if (buffer)
+		memset(buffer, 0, bufferSize);
 
-		delayReadPosition = (int)(delayWritePosition - delayInSamples);
+	delayReadPosition = 0.0;
+	delayWritePosition = 0.0;
 
-		// Wrap delay read position to the buffers range.
-		if (delayReadPosition < 0)
-			delayReadPosition += bufferSize;
-	}
-
-	if (feedback = *treeState.getRawParameterValue("feedback"))
-		feedback = *treeState.getRawParameterValue("feedback");
-	if (wetMix = *treeState.getRawParameterValue("wetMix"))
-		wetMix = *treeState.getRawParameterValue("wetMix");
+	setupBuffer();
 }
 
-void TnpDelayLine::prepareToPlay(double sampleRate)
+void TnpDelayLine::setSampleRate(double sampleRate)
 {
 	this->sampleRate = sampleRate;
 
+	initBuffer();
+}
+
+void TnpDelayLine::initBuffer()
+{
 	// Set 2 second max delay in samples.
 	bufferSize = (int)(2.0 * sampleRate);
 	if (bufferSize < 1)
 		bufferSize = 1;
 
-	buffer = new float[bufferSize];
-	memset(buffer, 0, bufferSize);
+	// delete old buffer
+	if (buffer)
+		delete[] buffer;
 
-	setupDelay();
+	// create new buffer
+	buffer = new float[bufferSize];
+	// flush new buffer
+	memset(buffer, 0, bufferSize);
 }
 
-float TnpDelayLine::processAudio(int inputBufferSize, float* inputBuffer)
+void TnpDelayLine::setFeedback(float feedback)
 {
-	float yn = buffer[delayReadPosition];
+	this->feedback = feedback;
+}
 
-	float xn = *inputBuffer;
+void TnpDelayLine::setWetMix(float wetMix)
+{
+	this->wetMix = wetMix;
+}
 
-	if (delayLength == 0)
-		yn = xn;
+void TnpDelayLine::setDelayTime(double delayTime_ms)
+{
+	delayLength = delayTime_ms;
+	setupBuffer();
+}
 
-	buffer[delayWritePosition] = xn + feedback * yn;
+void TnpDelayLine::setupBuffer()
+{
+	delayInSamples = delayLength * sampleRate;
 
-	float output = (xn * (1 - wetMix)) + (yn * wetMix);
+	delayReadPosition = (int)(delayWritePosition - delayInSamples);
 
-	*inputBuffer = output;
+	// Wrap delay read position to the buffers range.
+	if (delayReadPosition < 0)
+		delayReadPosition += bufferSize;
+}
 
-	delayReadPosition++;
-	if (delayReadPosition >= bufferSize)
-		delayReadPosition = 0;
-	delayWritePosition++;
-	if (delayWritePosition >= bufferSize)
-		delayWritePosition = 0;
+float TnpDelayLine::processAudio(float* inputBuffer)
+{
+	float output = 0.0;
+	
+	if (buffer != NULL)
+	{
+		float yn = buffer[delayReadPosition];
+
+		float xn = *inputBuffer;
+
+		if (delayLength == 0)
+			yn = xn;
+
+		buffer[delayWritePosition] = xn + feedback * yn;
+
+		output = (xn * (1 - wetMix)) + (yn * wetMix);
+
+		*inputBuffer = output;
+
+		delayReadPosition++;
+		if (delayReadPosition >= bufferSize)
+			delayReadPosition = 0;
+		delayWritePosition++;
+		if (delayWritePosition >= bufferSize)
+			delayWritePosition = 0;
+	}
 
 	return output;
 }

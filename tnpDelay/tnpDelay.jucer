@@ -6,6 +6,10 @@
       <FILE id="ClD5DA" name="background.jpg" compile="0" resource="1" file="../../../../../../Pictures/background.jpg"/>
     </GROUP>
     <GROUP id="{600BAB3F-D48C-1D32-34DE-F52190FBAB71}" name="Source">
+      <FILE id="YtGVPR" name="TnpStereoDelay.cpp" compile="1" resource="0"
+            file="Source/TnpStereoDelay.cpp"/>
+      <FILE id="nzFYO5" name="TnpStereoDelay.h" compile="0" resource="0"
+            file="Source/TnpStereoDelay.h"/>
       <FILE id="hdMyTE" name="TnpDelayLine.cpp" compile="1" resource="0"
             file="Source/TnpDelayLine.cpp"/>
       <FILE id="LCoWo9" name="TnpDelayLine.h" compile="0" resource="0" file="Source/TnpDelayLine.h"/>

@@ -15,24 +15,30 @@
 class TnpDelayLine
 {
 public:
-	TnpDelayLine(AudioProcessorValueTreeState&);
+	TnpDelayLine();
 	~TnpDelayLine();
 
 	//==============================================================================
-	void setupDelay();
+	void resetDelay();
 
 	//==============================================================================
-	void prepareToPlay(double);
-	float processAudio(int inputBufferSize, float* inputBufferL);
+	void setSampleRate(double sampleRate);
+	void initBuffer();
+
+	void setFeedback(float feedback);
+	void setWetMix(float wetMix);
+
+	void setDelayTime(double delayTime_ms);
+	void setupBuffer();
+	
+	float processAudio(float* inputBufferL);
 
 private:
-	AudioProcessorValueTreeState& treeState;
+
 	float* buffer;
 	int bufferSize;
 	int delayReadPosition, delayWritePosition;
 	int sampleRate;
 	float delayLength, delayInSamples;
-	float wetMix;
-	float feedback;
-
+	double feedback, wetMix;
 };

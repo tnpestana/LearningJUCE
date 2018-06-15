@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "TnpDelayLine.h"
+#include "TnpStereoDelay.h"
 
 //==============================================================================
 /**
@@ -60,7 +60,7 @@ public:
 	AudioProcessorValueTreeState treeState;
 
 private:
-	TnpDelayLine delay;
+	TnpStereoDelay delay;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpDelayAudioProcessor)
