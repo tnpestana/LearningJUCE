@@ -11,17 +11,15 @@
 #include "TnpDelayLine.h"
 
 TnpDelayLine::TnpDelayLine()
-{
-	// zero everything
-	buffer = nullptr;
-	delayLength = 0.0;		// in seconds
-	bufferSize = 0;	
-	delayReadPosition = 0;
-	delayWritePosition = 0;
-	sampleRate = 0;
-	feedback = 0.0;
-	wetMix = 0.0;
-	
+	: buffer(nullptr),
+	delayLength(0.0),
+	bufferSize(0),
+	delayReadPosition(0),
+	delayWritePosition(0),
+	sampleRate(0),
+	feedback(0.0),
+	wetMix(0.0)
+{	
 }
 
 TnpDelayLine::~TnpDelayLine()

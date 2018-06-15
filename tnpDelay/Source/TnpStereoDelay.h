@@ -21,6 +21,7 @@ public:
 
 	void setDelayTime(float delayTime);
 
+	void updateParams();
 
 	void prepareToPlay(double sampleRate);
 	void processAudio(float* inputBufferL, float* inputBufferR);

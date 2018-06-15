@@ -145,6 +145,8 @@ void TnpDelayAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer
 	for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
 		buffer.clear(i, 0, buffer.getNumSamples());
 
+	delay.updateParams();
+
 	for (int sample = 0; sample < buffer.getNumSamples(); sample++)
 	{
 		float* outputDataL = buffer.getWritePointer(0, sample);
