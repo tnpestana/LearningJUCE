@@ -7,8 +7,6 @@
       <FILE id="WDFpFr" name="cello.wav" compile="0" resource="1" file="Media/cello.wav"/>
     </GROUP>
     <GROUP id="{D17708C9-087F-168B-7C8D-F0AF121059B3}" name="Source">
-      <FILE id="tp4b8O" name="tnpSynth.cpp" compile="1" resource="0" file="Source/tnpSynth.cpp"/>
-      <FILE id="g1ECEb" name="tnpSynth.h" compile="0" resource="0" file="Source/tnpSynth.h"/>
       <FILE id="hy3RY4" name="tnpAudioSource.cpp" compile="1" resource="0"
             file="Source/tnpAudioSource.cpp"/>
       <FILE id="M02F5w" name="tnpAudioSource.h" compile="0" resource="0"
