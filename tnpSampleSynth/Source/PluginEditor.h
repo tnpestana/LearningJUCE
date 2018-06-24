@@ -19,7 +19,8 @@
 class TnpSampleSynthAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
-    TnpSampleSynthAudioProcessorEditor (TnpSampleSynthAudioProcessor&);
+    TnpSampleSynthAudioProcessorEditor (TnpSampleSynthAudioProcessor&, 
+		AudioDeviceManager&, MidiKeyboardState&);
     ~TnpSampleSynthAudioProcessorEditor();
 
     //==============================================================================
@@ -30,6 +31,10 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     TnpSampleSynthAudioProcessor& processor;
+	AudioDeviceManager& deviceManager;
+	MidiKeyboardState& keyboardState;
+
+	MidiKeyboardComponent keyboardComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpSampleSynthAudioProcessorEditor)
 };

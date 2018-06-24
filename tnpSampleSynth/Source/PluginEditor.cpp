@@ -12,12 +12,16 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-TnpSampleSynthAudioProcessorEditor::TnpSampleSynthAudioProcessorEditor (TnpSampleSynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+TnpSampleSynthAudioProcessorEditor::TnpSampleSynthAudioProcessorEditor (TnpSampleSynthAudioProcessor& p,
+	AudioDeviceManager& dm, MidiKeyboardState& ks)
+    : AudioProcessorEditor (&p), processor (p), deviceManager(dm), 
+	keyboardState(ks), keyboardComponent(ks, MidiKeyboardComponent::horizontalKeyboard)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
+
+	addAndMakeVisible(keyboardComponent);
 }
 
 TnpSampleSynthAudioProcessorEditor::~TnpSampleSynthAudioProcessorEditor()
@@ -37,6 +41,5 @@ void TnpSampleSynthAudioProcessorEditor::paint (Graphics& g)
 
 void TnpSampleSynthAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+	keyboardComponent.setBounds(getLocalBounds());
 }

@@ -3,7 +3,16 @@
 <JUCERPROJECT id="jDA9I3" name="tnpSampleSynth" projectType="audioplug" jucerVersion="5.3.2"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="pmifYM" name="tnpSampleSynth">
+    <GROUP id="{7392A097-944D-CC34-2478-F6F712EB32FB}" name="Media">
+      <FILE id="WDFpFr" name="cello.wav" compile="0" resource="1" file="Media/cello.wav"/>
+    </GROUP>
     <GROUP id="{D17708C9-087F-168B-7C8D-F0AF121059B3}" name="Source">
+      <FILE id="tp4b8O" name="tnpSynth.cpp" compile="1" resource="0" file="Source/tnpSynth.cpp"/>
+      <FILE id="g1ECEb" name="tnpSynth.h" compile="0" resource="0" file="Source/tnpSynth.h"/>
+      <FILE id="hy3RY4" name="tnpAudioSource.cpp" compile="1" resource="0"
+            file="Source/tnpAudioSource.cpp"/>
+      <FILE id="M02F5w" name="tnpAudioSource.h" compile="0" resource="0"
+            file="Source/tnpAudioSource.h"/>
       <FILE id="NBl90f" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="LsfcI6" name="PluginProcessor.h" compile="0" resource="0"

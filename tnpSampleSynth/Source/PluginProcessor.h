@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "tnpAudioSource.h"
 
 //==============================================================================
 /**
@@ -56,6 +57,14 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+	AudioDeviceManager deviceManager;
+
+	MidiKeyboardState keyboardState;
+
+	AudioSourcePlayer sourcePlayer;
+
+	TnpAudioSource audioSource{ keyboardState };
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpSampleSynthAudioProcessor)
 };
