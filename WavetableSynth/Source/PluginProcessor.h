@@ -11,8 +11,8 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "SineOscillator.h"
 #include "WavetableOScillator.h"
+#include "TnpSynth.h"
 
 //==============================================================================
 /**
@@ -58,9 +58,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
-	float level;
-	OwnedArray<WavetableOscillator> oscillators;
-	static int bMaj7MidiNotes[];
+	Synthesiser tnpSynth;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WavetableSynthAudioProcessor)

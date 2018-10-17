@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="WavetableSynth" projectType="audioplug" buildStandalone="1"
-              jucerVersion="5.3.0" buildVST3="0" buildAU="0" pluginIsSynth="1"
-              pluginWantsMidiIn="1">
+              jucerVersion="5.3.2" buildVST3="1" buildAU="0" pluginIsSynth="1"
+              pluginWantsMidiIn="1" id="qKfGdU" pluginFormats="buildVST,buildVST3,buildStandalone"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              buildVST="1" buildAUv3="0" buildRTAS="0" buildAAX="0" enableIAA="0">
   <MAINGROUP id="OUhoN7" name="WavetableSynth">
     <GROUP id="{5F8DB5C8-68A1-07DC-2394-41719DE514DF}" name="Source">
       <FILE id="RGoGNI" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -12,14 +14,12 @@
       <FILE id="Q2DSgC" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="a8XreI" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="D08uSY" name="SineOscillator.cpp" compile="1" resource="0"
-            file="Source/SineOscillator.cpp"/>
-      <FILE id="HOqu8q" name="SineOscillator.h" compile="0" resource="0"
-            file="Source/SineOscillator.h"/>
       <FILE id="ahnotB" name="WavetableOscillator.cpp" compile="1" resource="0"
             file="Source/WavetableOscillator.cpp"/>
       <FILE id="yVyGZr" name="WavetableOscillator.h" compile="0" resource="0"
             file="Source/WavetableOscillator.h"/>
+      <FILE id="CYUjVH" name="TnpSynth.cpp" compile="1" resource="0" file="Source/TnpSynth.cpp"/>
+      <FILE id="Wl2HnO" name="TnpSynth.h" compile="0" resource="0" file="Source/TnpSynth.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
@@ -66,4 +66,7 @@
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <JUCEOPTIONS/>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
 </JUCERPROJECT>

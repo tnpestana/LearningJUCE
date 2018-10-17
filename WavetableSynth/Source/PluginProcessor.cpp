@@ -21,8 +21,7 @@ WavetableSynthAudioProcessor::WavetableSynthAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       ),
-		level(0.0f)
+                       )
 #endif
 {
 	WavetableOscillator::createWavetable();	
@@ -31,14 +30,6 @@ WavetableSynthAudioProcessor::WavetableSynthAudioProcessor()
 WavetableSynthAudioProcessor::~WavetableSynthAudioProcessor()
 {
 }
-
-int WavetableSynthAudioProcessor::bMaj7MidiNotes[16] =
-{
-	35, 47, 59, 71,
-	27, 39, 51, 63,
-	30, 42, 54, 66,
-	34, 46, 58, 70 
-};
 
 //==============================================================================
 const String WavetableSynthAudioProcessor::getName() const
@@ -105,20 +96,13 @@ void WavetableSynthAudioProcessor::changeProgramName (int index, const String& n
 //==============================================================================
 void WavetableSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-	int numberOfOscillators = 100;
+	tnpSynth.setCurrentPlaybackSampleRate(sampleRate);
 
-	for (int i = 0; i < numberOfOscillators; i++)
-	{
-		WavetableOscillator* oscillator = new WavetableOscillator ();
-
-		double midiNote = bMaj7MidiNotes[Random::getSystemRandom().nextInt(Range<int>::Range(0,15))];
-		double frequency = 440.0 * pow(2.0, (midiNote - 69.0) / 12.0);
-
-		oscillator->setFrequency((float)frequency, sampleRate);
-		oscillators.add(oscillator);
-	}
-
-	level = 0.25f / numberOfOscillators;
+	tnpSynth.clearVoices();
+	for (int i = 0; i < 10; i++)
+		tnpSynth.addVoice(new TnpSynthVoice());
+	tnpSynth.clearSounds();
+	tnpSynth.addSound(new TnpSynthSound());
 }
 
 void WavetableSynthAudioProcessor::releaseResources()
@@ -146,28 +130,14 @@ bool WavetableSynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
         return false;
    #endif
 
-    return true;
+	return true;
   #endif
 }
 #endif
 
 void WavetableSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-	float* leftBuffer = buffer.getWritePointer(0, 0);
-
-	float* rightBuffer = buffer.getWritePointer(1, 0);
-	buffer.clear();
-
-	for (int oscillatorIndex = 0; oscillatorIndex < oscillators.size(); ++oscillatorIndex)
-	{
-		WavetableOscillator* oscillator = oscillators.getUnchecked(oscillatorIndex);    // [8]
-		for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
-		{
-			float levelSample = oscillator->getNextSample() * level;       // [9]
-			leftBuffer[sample] += levelSample;                           // [10]
-			rightBuffer[sample] += levelSample;
-		}
-	}
+	tnpSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
 //==============================================================================

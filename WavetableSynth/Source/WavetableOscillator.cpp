@@ -56,7 +56,7 @@ int WavetableOscillator::tableSize = 128;
 ScopedPointer<AudioSampleBuffer> WavetableOscillator::wavetable = new AudioSampleBuffer();
 
 void WavetableOscillator::createWavetable()
-{
+{ 
 	wavetable->setSize(1, tableSize);
 	float* samples = wavetable->getWritePointer(0);
 
