@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="PTp3P7" name="tnpDelay" projectType="audioplug" jucerVersion="5.3.2">
+<JUCERPROJECT id="PTp3P7" name="tnpDelay" projectType="audioplug" jucerVersion="5.3.2"
+              pluginFormats="buildVST,buildVST3">
   <MAINGROUP id="nS7awJ" name="tnpDelay">
     <GROUP id="{2FD656E6-A563-96C6-6E26-43966C19540A}" name="Media">
       <FILE id="ClD5DA" name="background.jpg" compile="0" resource="1" file="../../../../../../Pictures/background.jpg"/>
