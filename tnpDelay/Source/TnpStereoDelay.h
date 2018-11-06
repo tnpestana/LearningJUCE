@@ -29,5 +29,6 @@ public:
 private:
 	AudioProcessorValueTreeState& treeState;
 	TnpDelayLine delayLeft, delayRight;
+	float currentDelayTime, currentFeedback, currentMix;
 	
 };

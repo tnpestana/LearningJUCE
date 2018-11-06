@@ -11,7 +11,12 @@
 #include "TnpStereoDelay.h"
 
 TnpStereoDelay::TnpStereoDelay(AudioProcessorValueTreeState& treeState)
-	: treeState(treeState)
+	: treeState(treeState),
+	currentDelayTime(0.0f),
+	currentFeedback(0.0f),
+	currentMix(0.0f),
+	delayLeft(),
+	delayRight()
 {
 	// zero values
 
@@ -37,26 +42,30 @@ void TnpStereoDelay::setDelayTime(float delayTime)
 
 void TnpStereoDelay::updateParams()
 {
-	float timeParam = *treeState.getRawParameterValue("delayTime");
-	delayLeft.setDelayTime(timeParam);
-	delayRight.setDelayTime(timeParam);
+	if (currentDelayTime != *treeState.getRawParameterValue("delayTime"))
+	{
+		setDelayTime(*treeState.getRawParameterValue("delayTime"));
+	}
 
 	float feedbackparam = *treeState.getRawParameterValue("feedback");
-	delayLeft.setFeedback(feedbackparam);
-	delayRight.setFeedback(*treeState.getRawParameterValue("feedback"));
+	if (currentFeedback != feedbackparam)
+	{
+		delayLeft.setFeedback(feedbackparam);
+		delayRight.setFeedback(feedbackparam);
+	}
 
-	float wetParam = *treeState.getRawParameterValue("wetMix");
-	delayLeft.setWetMix(wetParam);
-	delayRight.setWetMix(wetParam);
+	float mixParam = *treeState.getRawParameterValue("wetMix");
+	if (currentMix != mixParam)
+	{
+		delayLeft.setWetMix(mixParam);
+		delayRight.setWetMix(mixParam);
+	}
 }
 
 void TnpStereoDelay::prepareToPlay(double sampleRate)
 {
-	delayLeft.resetDelay();
-	delayRight.resetDelay();
-
-	delayLeft.setSampleRate(sampleRate);
-	delayRight.setSampleRate(sampleRate);
+	delayLeft.resetDelay(sampleRate);
+	delayRight.resetDelay(sampleRate);
 
 	updateParams();
 }

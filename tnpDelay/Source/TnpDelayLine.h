@@ -19,10 +19,7 @@ public:
 	~TnpDelayLine();
 
 	//==============================================================================
-	void resetDelay();
-
-	//==============================================================================
-	void setSampleRate(double sampleRate);
+	void resetDelay(double sampleRate);
 	void initBuffer();
 
 	void setFeedback(float feedback);
@@ -40,5 +37,6 @@ private:
 	int delayReadPosition, delayWritePosition;
 	int sampleRate;
 	float delayLength, delayInSamples;
+	LinearSmoothedValue<float> smoothDelayLength;
 	double feedback, wetMix;
 };

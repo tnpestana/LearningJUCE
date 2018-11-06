@@ -78,3 +78,8 @@ void TnpDelayAudioProcessorEditor::resized()
 	feedbackLabel.setBounds(feedbackArea.removeFromLeft(100));
 	feedbackSlider.setBounds(feedbackArea);
 }
+
+void TnpDelayAudioProcessorEditor::sliderValueChanged(Slider * slider)
+{
+	processor.delay.setDelayTime(delayTimeSlider.getValue());
+}
