@@ -11,12 +11,22 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
-    // Make sure you set the size of the component after
-    // you add any child components.
-    setSize (800, 600);
+    // request audio recording permissions in run-time for compatibility
+    // with Android API 23
+    RuntimePermissions::request (
+            RuntimePermissions::recordAudio,
+            [this] (bool wasGranted) {
+                if (!wasGranted) {
+                    // Make sure you set the size of the component after
+                    // you add any child components.
+                    setSize(800, 600);
 
-    // specify the number of input and output channels that we want to open
-    setAudioChannels (0, 2);
+                    // specify the number of input and output channels that
+                    // we want to open
+                    setAudioChannels(2, 2);
+                }
+            }
+    );
 }
 
 MainComponent::~MainComponent()
