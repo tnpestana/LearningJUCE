@@ -16,7 +16,7 @@ MainComponent::MainComponent()
     setSize (800, 600);
 
     // specify the number of input and output channels that we want to open
-    setAudioChannels (2, 2);
+    setAudioChannels (0, 2);
 }
 
 MainComponent::~MainComponent()
@@ -63,6 +63,9 @@ void MainComponent::paint (Graphics& g)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 
     // You can add your drawing code here!
+    g.setColour (Colours::white);
+    g.setFont (15.0f);
+    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
 }
 
 void MainComponent::resized()
