@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="mSc8nG" name="TnpEQ" projectType="audioplug" jucerVersion="5.4.1"
-              pluginFormats="buildStandalone,buildVST,buildVST3">
+              pluginFormats="buildVST,buildVST3" pluginManufacturer="Tiago Pestana">
   <MAINGROUP id="L5SNNh" name="TnpEQ">
     <GROUP id="{6681F3E4-8157-EAB4-861F-C308EB49C3DB}" name="Source">
       <FILE id="YtYSuP" name="PluginProcessor.cpp" compile="1" resource="0"

@@ -33,7 +33,7 @@ TnpEqAudioProcessor::TnpEqAudioProcessor()
 	NormalisableRange<float> toggleFilterRange(0.0f, 1.0f, 1.0f);
 	filterCutoffRange.setSkewForCentre(1000.0f);
 	filterGainRange.setSkewForCentre(1.0f);
-	treeState.createAndAddParameter("loCutoff", "Low/Mid Cutoff", String(), filterCutoffRange, 500.0f, nullptr, nullptr);
+	treeState.createAndAddParameter("loCutoff", "Low/Mid Cutoff", String(), filterCutoffRange, 200.0f, nullptr, nullptr);
 	treeState.createAndAddParameter("hiCutoff", "Mid/High Cutoff", String(), filterCutoffRange, 2000.0f, nullptr, nullptr);
 	treeState.createAndAddParameter("loGain", "Low Band Gain", String(), filterGainRange, 1.0f, nullptr, nullptr);
 	treeState.createAndAddParameter("midGain", "Mid Band Gain", String(), filterGainRange, 1.0f, nullptr, nullptr);
