@@ -17,7 +17,7 @@ TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p, Au
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (350, 250);
 
 	attLoBand = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
 		(apvts, "loGain", loBand);
@@ -79,24 +79,23 @@ void TnpEqAudioProcessorEditor::paint (Graphics& g)
 	Rectangle<int> area (getLocalBounds());
 	Rectangle<int> top (area.removeFromTop(area.getHeight() / 2));
 
-	Rectangle<int> loBandArea (top.removeFromLeft(top.getWidth() / 3));
+	Rectangle<int> loBandArea (top.removeFromLeft(top.getWidth() / 3).reduced(5));
 	labelLoBand.setBounds (loBandArea.removeFromTop(20));
 	loBand.setBounds (loBandArea);
 
-	Rectangle<int> midBandArea (top.removeFromLeft(top.getWidth() / 2));
+	Rectangle<int> midBandArea (top.removeFromLeft(top.getWidth() / 2).reduced(5));
 	labelMidBand.setBounds (midBandArea.removeFromTop(20));
 	midBand.setBounds (midBandArea);
 
-	Rectangle<int> hiBandArea (top);
+	Rectangle<int> hiBandArea (top.reduced(5));
 	labelHiBand.setBounds (hiBandArea.removeFromTop(20));
 	hiBand.setBounds (hiBandArea);
 
-	Rectangle<int> loCutoffArea (area.removeFromLeft(area.getWidth() / 2));
+	Rectangle<int> loCutoffArea (area.removeFromLeft(area.getWidth() / 2).reduced(5));
 	labelLoCutoff.setBounds(loCutoffArea.removeFromBottom(20));
 	loCutoff.setBounds (loCutoffArea);
 
-
-	Rectangle<int> hiCutoffArea(area);
+	Rectangle<int> hiCutoffArea(area.reduced(5));
 	labelHiCutoff.setBounds(hiCutoffArea.removeFromBottom(20));
 	hiCutoff.setBounds(hiCutoffArea);
 }
