@@ -209,7 +209,7 @@ bool TnpEqAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* TnpEqAudioProcessor::createEditor()
 {
-    return new TnpEqAudioProcessorEditor (*this, treeState);
+    return new TnpEqAudioProcessorEditor (*this);
 }
 
 //==============================================================================
@@ -226,6 +226,11 @@ void TnpEqAudioProcessor::setStateInformation (const void* data, int sizeInBytes
 	if (xmlState.get() != nullptr)
 		if (xmlState->hasTagName(treeState.state.getType()))
 			treeState.replaceState(ValueTree::fromXml(*xmlState));
+}
+
+AudioProcessorValueTreeState & TnpEqAudioProcessor::getTreeState()
+{
+	return treeState;
 }
 
 //==============================================================================

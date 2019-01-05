@@ -12,23 +12,23 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p, AudioProcessorValueTreeState& apvts)
-    : AudioProcessorEditor (&p), processor (p)
+TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p)
+    : AudioProcessorEditor (&p), processor (p), treeState(p.getTreeState())
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (350, 250);
 
 	attLoBand = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(apvts, "loGain", loBand);
+		(treeState, "loGain", loBand);
 	attMidBand = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(apvts, "midGain", midBand);
+		(treeState, "midGain", midBand);
 	attHiBand = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(apvts, "hiGain", hiBand);
+		(treeState, "hiGain", hiBand);
 	attLoCutoff = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(apvts, "loCutoff", loCutoff);
+		(treeState, "loCutoff", loCutoff);
 	attHiCutoff = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(apvts, "hiCutoff", hiCutoff);
+		(treeState, "hiCutoff", hiCutoff);
 
 	loBand.setSliderStyle(Slider::RotaryVerticalDrag);
 	midBand.setSliderStyle(Slider::RotaryVerticalDrag);
@@ -42,11 +42,11 @@ TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p, Au
 	loCutoff.setSkewFactorFromMidPoint(1000.0);
 	hiCutoff.setSkewFactorFromMidPoint(1000.0);
 
-	loBand.setTextBoxStyle(Slider::TextBoxAbove, true, 45, 15);
-	midBand.setTextBoxStyle(Slider::TextBoxAbove, true, 45, 15);
-	hiBand.setTextBoxStyle(Slider::TextBoxAbove, true, 45, 15);
-	loCutoff.setTextBoxStyle(Slider::TextBoxBelow, true, 45, 15);
-	hiCutoff.setTextBoxStyle(Slider::TextBoxBelow, true, 45, 15);
+	loBand.setTextBoxStyle(Slider::TextBoxAbove, true, 50, 15);
+	midBand.setTextBoxStyle(Slider::TextBoxAbove, true, 50, 15);
+	hiBand.setTextBoxStyle(Slider::TextBoxAbove, true, 50, 15);
+	loCutoff.setTextBoxStyle(Slider::TextBoxBelow, true, 50, 15);
+	hiCutoff.setTextBoxStyle(Slider::TextBoxBelow, true, 50, 15);
 
 	labelLoBand.setText("low", dontSendNotification);
 	labelMidBand.setText("mid", dontSendNotification);

@@ -55,6 +55,9 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+	//==============================================================================
+	AudioProcessorValueTreeState& getTreeState();
+
 private:
 	double localSampleRate;
 	AudioProcessorValueTreeState treeState;

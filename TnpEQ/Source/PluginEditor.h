@@ -19,7 +19,7 @@
 class TnpEqAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
-    TnpEqAudioProcessorEditor (TnpEqAudioProcessor&, AudioProcessorValueTreeState&);
+    TnpEqAudioProcessorEditor (TnpEqAudioProcessor&);
     ~TnpEqAudioProcessorEditor();
 
     //==============================================================================
@@ -30,6 +30,7 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     TnpEqAudioProcessor& processor;
+	AudioProcessorValueTreeState& treeState;
 
 	Slider loBand;
 	Slider midBand;
