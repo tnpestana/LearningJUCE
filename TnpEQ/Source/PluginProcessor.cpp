@@ -22,24 +22,30 @@ TnpEqAudioProcessor::TnpEqAudioProcessor()
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
                        ),
-	treeState(*this, nullptr),
+	treeState(*this, nullptr, "TnpEQState",
+	{
+		std::make_unique<AudioParameterFloat>("loCutoff", "Low/Mid Cutoff", 
+			NormalisableRange<float>(20.f, 20000.0f, 00.1f), 200.0f),
+		std::make_unique<AudioParameterFloat>("hiCutoff", "Mid/High Cutoff",
+			NormalisableRange<float>(20.f, 20000.0f, 0.01f), 2000.0f),
+		std::make_unique<AudioParameterFloat>("loGain", "Low Band Gain",
+			NormalisableRange<float>(0.01f, 3.0f, 0.01f), 1.0f),
+		std::make_unique<AudioParameterFloat>("midGain", "Mid Band Gain",
+			NormalisableRange<float>(0.01f, 3.0f, 0.01f), 1.0f),
+		std::make_unique<AudioParameterFloat>("hiGain", "High Band Gain",
+			NormalisableRange<float>(0.01f, 3.0f, 0.01f), 1.0f),
+	}),
 	localSampleRate(1.0)
 #endif
 {
-	// IRR Filter parameter(S).
-	// One filter instance for each channel to avoid distortion.
-	NormalisableRange<float> filterCutoffRange(20.f, 20000.f, 0.01f);
-	NormalisableRange<float> filterGainRange(0.01f, 3.f, 0.01f);
-	NormalisableRange<float> toggleFilterRange(0.0f, 1.0f, 1.0f);
-	filterCutoffRange.setSkewForCentre(1000.0f);
-	filterGainRange.setSkewForCentre(1.0f);
-	treeState.createAndAddParameter("loCutoff", "Low/Mid Cutoff", String(), filterCutoffRange, 200.0f, nullptr, nullptr);
-	treeState.createAndAddParameter("hiCutoff", "Mid/High Cutoff", String(), filterCutoffRange, 2000.0f, nullptr, nullptr);
-	treeState.createAndAddParameter("loGain", "Low Band Gain", String(), filterGainRange, 1.0f, nullptr, nullptr);
-	treeState.createAndAddParameter("midGain", "Mid Band Gain", String(), filterGainRange, 1.0f, nullptr, nullptr);
-	treeState.createAndAddParameter("hiGain", "High Band Gain", String(), filterGainRange, 1.0f, nullptr, nullptr);
-	
-	treeState.state = ValueTree(Identifier("TnpEQ"));
+	//	Trying to set the skew factor directly from the parameters NormalizableRange
+	// doesn't seem to work.
+
+	/*treeState.getParameterRange("loCutoff").setSkewForCentre(1000.0f);
+	treeState.getParameterRange("hiCutoff").setSkewForCentre(1000.0f);
+	treeState.getParameterRange("loGain").setSkewForCentre(1.0f);
+	treeState.getParameterRange("midGain").setSkewForCentre(1.0f);
+	treeState.getParameterRange("hiGain").setSkewForCentre(1.0f);*/
 }
 
 TnpEqAudioProcessor::~TnpEqAudioProcessor()

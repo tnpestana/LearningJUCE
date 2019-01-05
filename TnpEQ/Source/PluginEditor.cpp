@@ -36,6 +36,12 @@ TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p, Au
 	loCutoff.setSliderStyle(Slider::RotaryVerticalDrag);
 	hiCutoff.setSliderStyle(Slider::RotaryVerticalDrag);
 
+	loBand.setSkewFactorFromMidPoint(1.0);
+	midBand.setSkewFactorFromMidPoint(1.0);
+	hiBand.setSkewFactorFromMidPoint(1.0);
+	loCutoff.setSkewFactorFromMidPoint(1000.0);
+	hiCutoff.setSkewFactorFromMidPoint(1000.0);
+
 	loBand.setTextBoxStyle(Slider::TextBoxAbove, true, 45, 15);
 	midBand.setTextBoxStyle(Slider::TextBoxAbove, true, 45, 15);
 	hiBand.setTextBoxStyle(Slider::TextBoxAbove, true, 45, 15);
@@ -75,33 +81,30 @@ void TnpEqAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-
-	Rectangle<int> area (getLocalBounds());
-	Rectangle<int> top (area.removeFromTop(area.getHeight() / 2));
-
-	Rectangle<int> loBandArea (top.removeFromLeft(top.getWidth() / 3).reduced(5));
-	labelLoBand.setBounds (loBandArea.removeFromTop(20));
-	loBand.setBounds (loBandArea);
-
-	Rectangle<int> midBandArea (top.removeFromLeft(top.getWidth() / 2).reduced(5));
-	labelMidBand.setBounds (midBandArea.removeFromTop(20));
-	midBand.setBounds (midBandArea);
-
-	Rectangle<int> hiBandArea (top.reduced(5));
-	labelHiBand.setBounds (hiBandArea.removeFromTop(20));
-	hiBand.setBounds (hiBandArea);
-
-	Rectangle<int> loCutoffArea (area.removeFromLeft(area.getWidth() / 2).reduced(5));
-	labelLoCutoff.setBounds(loCutoffArea.removeFromBottom(20));
-	loCutoff.setBounds (loCutoffArea);
-
-	Rectangle<int> hiCutoffArea(area.reduced(5));
-	labelHiCutoff.setBounds(hiCutoffArea.removeFromBottom(20));
-	hiCutoff.setBounds(hiCutoffArea);
 }
 
 void TnpEqAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+	Rectangle<int> area(getLocalBounds());
+	Rectangle<int> top(area.removeFromTop(area.getHeight() / 2));
+
+	Rectangle<int> loBandArea(top.removeFromLeft(top.getWidth() / 3).reduced(5));
+	labelLoBand.setBounds(loBandArea.removeFromTop(20));
+	loBand.setBounds(loBandArea);
+
+	Rectangle<int> midBandArea(top.removeFromLeft(top.getWidth() / 2).reduced(5));
+	labelMidBand.setBounds(midBandArea.removeFromTop(20));
+	midBand.setBounds(midBandArea);
+
+	Rectangle<int> hiBandArea(top.reduced(5));
+	labelHiBand.setBounds(hiBandArea.removeFromTop(20));
+	hiBand.setBounds(hiBandArea);
+
+	Rectangle<int> loCutoffArea(area.removeFromLeft(area.getWidth() / 2).reduced(5));
+	labelLoCutoff.setBounds(loCutoffArea.removeFromBottom(20));
+	loCutoff.setBounds(loCutoffArea);
+
+	Rectangle<int> hiCutoffArea(area.reduced(5));
+	labelHiCutoff.setBounds(hiCutoffArea.removeFromBottom(20));
+	hiCutoff.setBounds(hiCutoffArea);
 }
