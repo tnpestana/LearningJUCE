@@ -38,14 +38,11 @@ TnpEqAudioProcessor::TnpEqAudioProcessor()
 	localSampleRate(1.0)
 #endif
 {
-	//	Trying to set the skew factor directly from the parameters NormalizableRange
-	// doesn't seem to work.
-
-	/*treeState.getParameterRange("loCutoff").setSkewForCentre(1000.0f);
-	treeState.getParameterRange("hiCutoff").setSkewForCentre(1000.0f);
-	treeState.getParameterRange("loGain").setSkewForCentre(1.0f);
-	treeState.getParameterRange("midGain").setSkewForCentre(1.0f);
-	treeState.getParameterRange("hiGain").setSkewForCentre(1.0f);*/
+	dynamic_cast<AudioParameterFloat*>(treeState.getParameter("loCutoff"))->range.setSkewForCentre(1000.0f);
+	dynamic_cast<AudioParameterFloat*>(treeState.getParameter("hiCutoff"))->range.setSkewForCentre(1000.0f);
+	dynamic_cast<AudioParameterFloat*>(treeState.getParameter("loGain"))->range.setSkewForCentre(1.0f);
+	dynamic_cast<AudioParameterFloat*>(treeState.getParameter("midGain"))->range.setSkewForCentre(1.0f);
+	dynamic_cast<AudioParameterFloat*>(treeState.getParameter("hiGain"))->range.setSkewForCentre(1.0f);
 }
 
 TnpEqAudioProcessor::~TnpEqAudioProcessor()

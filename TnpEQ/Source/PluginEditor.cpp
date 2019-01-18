@@ -13,22 +13,23 @@
 
 //==============================================================================
 TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), treeState(p.getTreeState())
+    : AudioProcessorEditor (&p),
+	//	Processor references
+	processor (p), 
+	treeState (p.getTreeState()),
+	//	Parameter Attachments
+	attLoBand (std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "loGain", loBand)),
+	attMidBand (std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "midGain", midBand)),
+	attHiBand (std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "hiGain", hiBand)),
+	attLoCutoff (std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "loCutoff", loCutoff)),
+	attHiCutoff (std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "hiCutoff", hiCutoff))
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
     setSize (350, 250);
-
-	attLoBand = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(treeState, "loGain", loBand);
-	attMidBand = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(treeState, "midGain", midBand);
-	attHiBand = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(treeState, "hiGain", hiBand);
-	attLoCutoff = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(treeState, "loCutoff", loCutoff);
-	attHiCutoff = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(treeState, "hiCutoff", hiCutoff);
 
 	loBand.setSliderStyle(Slider::RotaryVerticalDrag);
 	midBand.setSliderStyle(Slider::RotaryVerticalDrag);
@@ -79,7 +80,7 @@ TnpEqAudioProcessorEditor::~TnpEqAudioProcessorEditor()
 //==============================================================================
 void TnpEqAudioProcessorEditor::paint (Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
+    // Our component is opaque, so we must completely fill the background with a solid colour
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 }
 
