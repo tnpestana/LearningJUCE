@@ -115,6 +115,13 @@ void TnpEqAudioProcessor::changeProgramName (int index, const String& newName)
 void TnpEqAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 	localSampleRate = sampleRate;
+
+	treeState.addParameterListener("loCutoff", this);
+	treeState.addParameterListener("hiCutoff", this);
+	treeState.addParameterListener("loGain", this);
+	treeState.addParameterListener("midGain", this);
+	treeState.addParameterListener("hiGain", this);
+	updateFilter();
 }
 
 void TnpEqAudioProcessor::releaseResources()
@@ -161,25 +168,6 @@ void TnpEqAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& 
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-
-	const float loGain = *treeState.getRawParameterValue("loGain");
-	const float midGain = *treeState.getRawParameterValue("midGain");
-	const float hiGain = *treeState.getRawParameterValue("hiGain");
-	const float loCutoff = *treeState.getRawParameterValue("loCutoff");
-	const float hiCutoff = *treeState.getRawParameterValue("hiCutoff");
-
-	filterLoLeft.setCoefficients(IIRCoefficients::makeLowShelf(
-		localSampleRate, loCutoff, 2.0f, loGain));
-	filterLoRight.setCoefficients(IIRCoefficients::makeLowShelf(
-		localSampleRate, loCutoff, 2.0f, loGain));
-	filterMidLeft.setCoefficients(IIRCoefficients::makePeakFilter(
-		localSampleRate, (loCutoff + hiCutoff) / 2, 2.0f, midGain));
-	filterMidRight.setCoefficients(IIRCoefficients::makePeakFilter(
-		localSampleRate, (loCutoff + hiCutoff) / 2, 2.0f, midGain));
-	filterHiLeft.setCoefficients(IIRCoefficients::makeHighShelf(
-		localSampleRate, hiCutoff, 2.0f, hiGain));
-	filterHiRight.setCoefficients(IIRCoefficients::makeHighShelf(
-		localSampleRate, hiCutoff, 2.0f, hiGain));
 
 	if (buffer.getNumChannels() == 1)
 	{
@@ -228,6 +216,35 @@ void TnpEqAudioProcessor::setStateInformation (const void* data, int sizeInBytes
 AudioProcessorValueTreeState & TnpEqAudioProcessor::getTreeState()
 {
 	return treeState;
+}
+
+//==============================================================================
+void TnpEqAudioProcessor::updateFilter()
+{
+	const float loGain = *treeState.getRawParameterValue("loGain");
+	const float midGain = *treeState.getRawParameterValue("midGain");
+	const float hiGain = *treeState.getRawParameterValue("hiGain");
+	const float loCutoff = *treeState.getRawParameterValue("loCutoff");
+	const float hiCutoff = *treeState.getRawParameterValue("hiCutoff");
+
+	filterLoLeft.setCoefficients(IIRCoefficients::makeLowShelf(
+		localSampleRate, loCutoff, 2.0f, loGain));
+	filterLoRight.setCoefficients(IIRCoefficients::makeLowShelf(
+		localSampleRate, loCutoff, 2.0f, loGain));
+	filterMidLeft.setCoefficients(IIRCoefficients::makePeakFilter(
+		localSampleRate, (loCutoff + hiCutoff) / 2, 2.0f, midGain));
+	filterMidRight.setCoefficients(IIRCoefficients::makePeakFilter(
+		localSampleRate, (loCutoff + hiCutoff) / 2, 2.0f, midGain));
+	filterHiLeft.setCoefficients(IIRCoefficients::makeHighShelf(
+		localSampleRate, hiCutoff, 2.0f, hiGain));
+	filterHiRight.setCoefficients(IIRCoefficients::makeHighShelf(
+		localSampleRate, hiCutoff, 2.0f, hiGain));
+}
+
+// Value Tree State Listener
+void TnpEqAudioProcessor::parameterChanged(const String & parameterID, float newValue)
+{
+	updateFilter();
 }
 
 //==============================================================================

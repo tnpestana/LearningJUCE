@@ -15,7 +15,7 @@
 //==============================================================================
 /**
 */
-class TnpEqAudioProcessor  : public AudioProcessor
+class TnpEqAudioProcessor  : public AudioProcessor, public AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -67,6 +67,11 @@ private:
 	IIRFilter filterMidRight;
 	IIRFilter filterHiLeft;
 	IIRFilter filterHiRight;
+
+	void updateFilter();
+
+	// Inherited via Listener
+	virtual void parameterChanged(const String & parameterID, float newValue) override;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpEqAudioProcessor)
