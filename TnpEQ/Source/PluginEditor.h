@@ -33,6 +33,8 @@ private:
     TnpEqAudioProcessor& processor;
 	AudioProcessorValueTreeState& treeState;
 
+	juce::Image backgroundImage;
+
 	TnpLookAndFeel tnpLookAndFeel;
 
 	Slider loBand;

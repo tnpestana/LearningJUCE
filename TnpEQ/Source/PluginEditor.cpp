@@ -29,7 +29,9 @@ TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p)
 	attHiCutoff (std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
 		(treeState, "hiCutoff", hiCutoff))
 {
-    setSize (350, 250);
+    setSize (350, 250 + 40 /*title section size*/);
+
+	backgroundImage = ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
 
 	loBand.setSliderStyle(Slider::RotaryVerticalDrag);
 	midBand.setSliderStyle(Slider::RotaryVerticalDrag);
@@ -88,26 +90,17 @@ void TnpEqAudioProcessorEditor::paint (Graphics& g)
 {
     // Our component is opaque, so we must completely fill the background with a solid colour
     g.fillAll (Colours::rosybrown);
+	g.drawImageAt(backgroundImage, 0, 0);
+
+	getLookAndFeel().setColour(Label::textColourId, Colours::black);
+	getLookAndFeel().setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);	// doesnt work?
 
 	tnpLookAndFeel.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
 
-	loBand.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
-	midBand.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
-	hiBand.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
-	loCutoff.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
-	hiCutoff.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
-
-	loBand.setColour(Label::textColourId, Colours::black);
-	midBand.setColour(Label::textColourId, Colours::black);
-	hiBand.setColour(Label::textColourId, Colours::black);
-	loCutoff.setColour(Label::textColourId, Colours::black);
-	hiCutoff.setColour(Label::textColourId, Colours::black);
-
-	loBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
-	midBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
-	hiBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
-	loCutoff.setColour(Slider::textBoxOutlineColourId, Colours::black);
-	hiCutoff.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	/*
+	tnpLookAndFeel.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	tnpLookAndFeel.setColour(Slider::textBoxTextColourId, Colours::black);
+	*/
 
 	loBand.setColour(Slider::textBoxTextColourId, Colours::black);
 	midBand.setColour(Slider::textBoxTextColourId, Colours::black);
@@ -115,12 +108,19 @@ void TnpEqAudioProcessorEditor::paint (Graphics& g)
 	loCutoff.setColour(Slider::textBoxTextColourId, Colours::black);
 	hiCutoff.setColour(Slider::textBoxTextColourId, Colours::black);
 
-	getLookAndFeel().setColour(Label::textColourId, Colours::black);
+	loBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	midBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	hiBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	loCutoff.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	hiCutoff.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	
+	
 }
 
 void TnpEqAudioProcessorEditor::resized()
 {
 	Rectangle<int> area(getLocalBounds());
+	Rectangle<int> titleSection(area.removeFromTop(40));
 	Rectangle<int> top(area.removeFromTop(area.getHeight() / 2));
 
 	Rectangle<int> loBandArea(top.removeFromLeft(top.getWidth() / 3).reduced(5));
