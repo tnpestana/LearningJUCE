@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "TnpLookAndFeel.h"
 
 //==============================================================================
 /**
@@ -31,6 +32,8 @@ private:
     // access the processor object that created it.
     TnpEqAudioProcessor& processor;
 	AudioProcessorValueTreeState& treeState;
+
+	TnpLookAndFeel tnpLookAndFeel;
 
 	Slider loBand;
 	Slider midBand;

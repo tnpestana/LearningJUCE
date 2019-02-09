@@ -71,6 +71,12 @@ TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p)
 	addAndMakeVisible(labelHiBand);
 	addAndMakeVisible(labelLoCutoff);
 	addAndMakeVisible(labelHiCutoff);
+
+	loBand.setLookAndFeel(&tnpLookAndFeel);
+	midBand.setLookAndFeel(&tnpLookAndFeel);
+	hiBand.setLookAndFeel(&tnpLookAndFeel);
+	loCutoff.setLookAndFeel(&tnpLookAndFeel);
+	hiCutoff.setLookAndFeel(&tnpLookAndFeel);
 }
 
 TnpEqAudioProcessorEditor::~TnpEqAudioProcessorEditor()

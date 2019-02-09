@@ -4,6 +4,12 @@
               pluginFormats="buildVST,buildVST3" pluginManufacturer="Tiago Pestana">
   <MAINGROUP id="L5SNNh" name="TnpEQ">
     <GROUP id="{6681F3E4-8157-EAB4-861F-C308EB49C3DB}" name="Source">
+      <GROUP id="{B379D35F-C9B0-63C1-A629-5E592B2D8167}" name="UI">
+        <FILE id="cOImFy" name="TnpLookAndFeel.cpp" compile="1" resource="0"
+              file="Source/TnpLookAndFeel.cpp"/>
+        <FILE id="DQf0M2" name="TnpLookAndFeel.h" compile="0" resource="0"
+              file="Source/TnpLookAndFeel.h"/>
+      </GROUP>
       <FILE id="YtYSuP" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="nJ15jT" name="PluginProcessor.h" compile="0" resource="0"
