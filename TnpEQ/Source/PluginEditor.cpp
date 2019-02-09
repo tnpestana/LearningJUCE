@@ -87,7 +87,35 @@ TnpEqAudioProcessorEditor::~TnpEqAudioProcessorEditor()
 void TnpEqAudioProcessorEditor::paint (Graphics& g)
 {
     // Our component is opaque, so we must completely fill the background with a solid colour
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    g.fillAll (Colours::rosybrown);
+
+	tnpLookAndFeel.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
+
+	loBand.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
+	midBand.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
+	hiBand.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
+	loCutoff.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
+	hiCutoff.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
+
+	loBand.setColour(Label::textColourId, Colours::black);
+	midBand.setColour(Label::textColourId, Colours::black);
+	hiBand.setColour(Label::textColourId, Colours::black);
+	loCutoff.setColour(Label::textColourId, Colours::black);
+	hiCutoff.setColour(Label::textColourId, Colours::black);
+
+	loBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	midBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	hiBand.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	loCutoff.setColour(Slider::textBoxOutlineColourId, Colours::black);
+	hiCutoff.setColour(Slider::textBoxOutlineColourId, Colours::black);
+
+	loBand.setColour(Slider::textBoxTextColourId, Colours::black);
+	midBand.setColour(Slider::textBoxTextColourId, Colours::black);
+	hiBand.setColour(Slider::textBoxTextColourId, Colours::black);
+	loCutoff.setColour(Slider::textBoxTextColourId, Colours::black);
+	hiCutoff.setColour(Slider::textBoxTextColourId, Colours::black);
+
+	getLookAndFeel().setColour(Label::textColourId, Colours::black);
 }
 
 void TnpEqAudioProcessorEditor::resized()

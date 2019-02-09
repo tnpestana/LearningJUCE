@@ -34,5 +34,5 @@ void TnpLookAndFeel::drawRotarySlider(Graphics & g, int x, int y, int width,
 	dialTick.addRectangle(0, -radius, 2.0f, radius * 0.33);
 	g.fillPath(dialTick, AffineTransform::rotation(angle).translated(centreX, centreY));
 
-	g.drawEllipse(rx, ry, diameter, diameter, 2.0f);
+	g.drawEllipse(rx, ry, diameter, diameter, 1.0f);
 }
