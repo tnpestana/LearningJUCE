@@ -29,7 +29,7 @@ TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p)
 	attHiCutoff (std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
 		(treeState, "hiCutoff", hiCutoff))
 {
-    setSize (350, 250 + 40 /*title section size*/);
+    setSize (350, 250);
 
 	backgroundImage = ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
 
@@ -95,12 +95,10 @@ void TnpEqAudioProcessorEditor::paint (Graphics& g)
 	getLookAndFeel().setColour(Label::textColourId, Colours::black);
 	getLookAndFeel().setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);	// doesnt work?
 
-	tnpLookAndFeel.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
-
-	/*
-	tnpLookAndFeel.setColour(Slider::textBoxOutlineColourId, Colours::black);
-	tnpLookAndFeel.setColour(Slider::textBoxTextColourId, Colours::black);
-	*/
+	//tnpLookAndFeel.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
+	tnpLookAndFeel.setColour(Slider::backgroundColourId, Colours::beige);
+	tnpLookAndFeel.setColour(Slider::thumbColourId, Colours::black);
+	tnpLookAndFeel.setColour(Slider::rotarySliderOutlineColourId, Colours::black);
 
 	loBand.setColour(Slider::textBoxTextColourId, Colours::black);
 	midBand.setColour(Slider::textBoxTextColourId, Colours::black);
@@ -120,7 +118,6 @@ void TnpEqAudioProcessorEditor::paint (Graphics& g)
 void TnpEqAudioProcessorEditor::resized()
 {
 	Rectangle<int> area(getLocalBounds());
-	Rectangle<int> titleSection(area.removeFromTop(40));
 	Rectangle<int> top(area.removeFromTop(area.getHeight() / 2));
 
 	Rectangle<int> loBandArea(top.removeFromLeft(top.getWidth() / 3).reduced(5));
