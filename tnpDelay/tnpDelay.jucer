@@ -4,10 +4,10 @@
               pluginFormats="buildVST,buildVST3">
   <MAINGROUP id="nS7awJ" name="tnpDelay">
     <GROUP id="{600BAB3F-D48C-1D32-34DE-F52190FBAB71}" name="Source">
-      <GROUP id="{4122B724-3890-BD7C-F8A9-1B3BC4300F0B}" name="UI">
-        <FILE id="liGJNT" name="TnpLookAndFeel.cpp" compile="1" resource="0"
+      <GROUP id="{D98FF0BB-2118-BE53-DB78-99F7648FC97A}" name="UI">
+        <FILE id="VERjpT" name="TnpLookAndFeel.cpp" compile="1" resource="0"
               file="Source/TnpLookAndFeel.cpp"/>
-        <FILE id="cVbVgs" name="TnpLookAndFeel.h" compile="0" resource="0"
+        <FILE id="JjcVPJ" name="TnpLookAndFeel.h" compile="0" resource="0"
               file="Source/TnpLookAndFeel.h"/>
       </GROUP>
       <FILE id="YtGVPR" name="TnpStereoDelay.cpp" compile="1" resource="0"

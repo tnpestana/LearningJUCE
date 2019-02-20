@@ -25,6 +25,10 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
 	addAndMakeVisible(feedbackSlider);
 	addAndMakeVisible(wetMixSlider);
 
+	delayTimeSlider.setLookAndFeel(&tnpLookAndFeel);
+	feedbackSlider.setLookAndFeel(&tnpLookAndFeel);
+	wetMixSlider.setLookAndFeel(&tnpLookAndFeel);
+
 	delayTimeSlider.setSliderStyle(Slider::RotaryVerticalDrag);
 	feedbackSlider.setSliderStyle(Slider::RotaryVerticalDrag);
 	wetMixSlider.setSliderStyle(Slider::RotaryVerticalDrag);
@@ -61,10 +65,11 @@ void TnpDelayAudioProcessorEditor::paint (Graphics& g)
 	g.fillAll(Colours::grey);
 	//g.drawImageAt(backgroundImage, 0, 0);
 
+	tnpLookAndFeel.setColour(Slider::backgroundColourId, Colours::whitesmoke);
+	tnpLookAndFeel.setColour(Slider::rotarySliderOutlineColourId, Colours::darkslategrey);
+	tnpLookAndFeel.setColour(Slider::thumbColourId, Colours::black);
+
 	getLookAndFeel().setColour(Label::textColourId, Colours::black);
-	getLookAndFeel().setColour(Slider::backgroundColourId, Colours::whitesmoke);
-	getLookAndFeel().setColour(Slider::trackColourId, Colours::darkslategrey);
-	getLookAndFeel().setColour(Slider::thumbColourId, Colours::black);
 
 	// getLookAndFeel() doesn't seem to work for setting sliders text boxes colours
 	// so I set them individually
@@ -78,15 +83,15 @@ void TnpDelayAudioProcessorEditor::resized()
 	juce::Rectangle<int> area(getLocalBounds());
 
 	juce::Rectangle<int> delayTimeArea(area.removeFromLeft(area.getWidth() / 3));
-	delayTimeLabel.setBounds(delayTimeArea.removeFromBottom(20));
+	delayTimeLabel.setBounds(delayTimeArea.removeFromBottom(30));
 	delayTimeSlider.setBounds(delayTimeArea);
 
 	juce::Rectangle<int> feedbackArea(area.removeFromLeft(area.getWidth() / 2));
-	feedbackLabel.setBounds(feedbackArea.removeFromBottom(20));
+	feedbackLabel.setBounds(feedbackArea.removeFromBottom(30));
 	feedbackSlider.setBounds(feedbackArea);
 
 	juce::Rectangle<int> wetMixArea(area);
-	wetMixLabel.setBounds(wetMixArea.removeFromBottom(20));
+	wetMixLabel.setBounds(wetMixArea.removeFromBottom(30));
 	wetMixSlider.setBounds(wetMixArea);	
 }
 

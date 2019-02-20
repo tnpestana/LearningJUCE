@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "TnpLookAndFeel.h"
 
 //==============================================================================
 /**
@@ -32,6 +33,8 @@ private:
     TnpDelayAudioProcessor& processor;
 
 	juce::Image backgroundImage;
+
+	TnpLookAndFeel tnpLookAndFeel;
 
 	Slider delayTimeSlider;
 	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
