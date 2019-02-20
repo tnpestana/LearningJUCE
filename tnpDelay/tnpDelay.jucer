@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="PTp3P7" name="tnpDelay" projectType="audioplug" jucerVersion="5.3.2"
+<JUCERPROJECT id="PTp3P7" name="tnpDelay" projectType="audioplug" jucerVersion="5.4.1"
               pluginFormats="buildVST,buildVST3">
   <MAINGROUP id="nS7awJ" name="tnpDelay">
-    <GROUP id="{2FD656E6-A563-96C6-6E26-43966C19540A}" name="Media">
-      <FILE id="ClD5DA" name="background.jpg" compile="0" resource="1" file="../../../../../../Pictures/background.jpg"/>
-    </GROUP>
     <GROUP id="{600BAB3F-D48C-1D32-34DE-F52190FBAB71}" name="Source">
+      <GROUP id="{4122B724-3890-BD7C-F8A9-1B3BC4300F0B}" name="UI">
+        <FILE id="liGJNT" name="TnpLookAndFeel.cpp" compile="1" resource="0"
+              file="Source/TnpLookAndFeel.cpp"/>
+        <FILE id="cVbVgs" name="TnpLookAndFeel.h" compile="0" resource="0"
+              file="Source/TnpLookAndFeel.h"/>
+      </GROUP>
       <FILE id="YtGVPR" name="TnpStereoDelay.cpp" compile="1" resource="0"
             file="Source/TnpStereoDelay.cpp"/>
       <FILE id="nzFYO5" name="TnpStereoDelay.h" compile="0" resource="0"

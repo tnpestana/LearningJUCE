@@ -19,24 +19,34 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
     // editor's size to whatever you need it to be.
     setSize (400, 200);
 
-	backgroundImage = ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
+	//backgroundImage = ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
 
 	addAndMakeVisible(delayTimeSlider);
-	delayTimeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "delayTime", delayTimeSlider);
-	addAndMakeVisible(delayTimeLabel);
-	delayTimeLabel.setText("time", dontSendNotification);
-	delayTimeLabel.setJustificationType(Justification::centred);
-
 	addAndMakeVisible(feedbackSlider);
-	feedbackAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "feedback", feedbackSlider);
-	addAndMakeVisible(feedbackLabel);
-	feedbackLabel.setText("feedback", dontSendNotification);
-	feedbackLabel.setJustificationType(Justification::centred);
-
 	addAndMakeVisible(wetMixSlider);
+
+	delayTimeSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+	feedbackSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+	wetMixSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+
+	delayTimeSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
+	feedbackSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
+	wetMixSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
+
+	delayTimeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "delayTime", delayTimeSlider);
+	feedbackAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "feedback", feedbackSlider);
 	wetMixAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "wetMix", wetMixSlider);
+
+	addAndMakeVisible(delayTimeLabel);
+	addAndMakeVisible(feedbackLabel);
 	addAndMakeVisible(wetMixLabel);
+
+	delayTimeLabel.setText("time", dontSendNotification);
+	feedbackLabel.setText("feedback", dontSendNotification);
 	wetMixLabel.setText("dry/wet", dontSendNotification);
+
+	delayTimeLabel.setJustificationType(Justification::centred);
+	feedbackLabel.setJustificationType(Justification::centred);
 	wetMixLabel.setJustificationType(Justification::centred);
 }
 
@@ -48,8 +58,9 @@ TnpDelayAudioProcessorEditor::~TnpDelayAudioProcessorEditor()
 void TnpDelayAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-	g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
-	g.drawImageAt(backgroundImage, 0, 0);
+	g.fillAll(Colours::grey);
+	//g.drawImageAt(backgroundImage, 0, 0);
+
 	getLookAndFeel().setColour(Label::textColourId, Colours::black);
 	getLookAndFeel().setColour(Slider::backgroundColourId, Colours::whitesmoke);
 	getLookAndFeel().setColour(Slider::trackColourId, Colours::darkslategrey);
@@ -66,17 +77,17 @@ void TnpDelayAudioProcessorEditor::resized()
 {
 	juce::Rectangle<int> area(getLocalBounds());
 
-	juce::Rectangle<int> wetMixArea(area.removeFromTop(getHeight() / 3));
-	wetMixLabel.setBounds(wetMixArea.removeFromLeft(100));
-	wetMixSlider.setBounds(wetMixArea);
-
-	juce::Rectangle<int> delayTimeArea(area.removeFromTop(area.getHeight() / 2));
-	delayTimeLabel.setBounds(delayTimeArea.removeFromLeft(100));
+	juce::Rectangle<int> delayTimeArea(area.removeFromLeft(area.getWidth() / 3));
+	delayTimeLabel.setBounds(delayTimeArea.removeFromBottom(20));
 	delayTimeSlider.setBounds(delayTimeArea);
 
-	juce::Rectangle<int> feedbackArea(area);
-	feedbackLabel.setBounds(feedbackArea.removeFromLeft(100));
+	juce::Rectangle<int> feedbackArea(area.removeFromLeft(area.getWidth() / 2));
+	feedbackLabel.setBounds(feedbackArea.removeFromBottom(20));
 	feedbackSlider.setBounds(feedbackArea);
+
+	juce::Rectangle<int> wetMixArea(area);
+	wetMixLabel.setBounds(wetMixArea.removeFromBottom(20));
+	wetMixSlider.setBounds(wetMixArea);	
 }
 
 void TnpDelayAudioProcessorEditor::sliderValueChanged(Slider * slider)
