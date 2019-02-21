@@ -18,16 +18,6 @@ TnpStereoDelay::TnpStereoDelay(AudioProcessorValueTreeState& treeState)
 	delayLeft(),
 	delayRight()
 {
-	// zero values
-
-	NormalisableRange<float> delayTimeRange(0.f, 2.f, 0.001f);
-	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
-	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, .5f, nullptr, nullptr);
-	NormalisableRange<float> wetMixRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("wetMix", "WetMix", String(), wetMixRange, 0.5f, nullptr, nullptr);
-
-	treeState.state = ValueTree(Identifier("DelayState"));
 }
 
 TnpStereoDelay::~TnpStereoDelay()

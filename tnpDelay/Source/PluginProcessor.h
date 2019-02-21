@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class TnpDelayAudioProcessor  : public AudioProcessor
+class TnpDelayAudioProcessor  : public AudioProcessor, public AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -64,4 +64,7 @@ private:
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpDelayAudioProcessor)
+
+		// Inherited via Listener
+		virtual void parameterChanged(const String & parameterID, float newValue) override;
 };

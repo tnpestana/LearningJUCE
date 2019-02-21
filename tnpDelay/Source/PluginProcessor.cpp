@@ -26,6 +26,14 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
 	delay(treeState)
 #endif
 {
+	NormalisableRange<float> delayTimeRange(0.f, 2.f, 0.001f);
+	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
+	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
+	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, .5f, nullptr, nullptr);
+	NormalisableRange<float> wetMixRange(0.f, 1.f, 0.001f);
+	treeState.createAndAddParameter("wetMix", "WetMix", String(), wetMixRange, 0.5f, nullptr, nullptr);
+
+	treeState.state = ValueTree(Identifier("DelayState"));
 }
 
 TnpDelayAudioProcessor::~TnpDelayAudioProcessor()
@@ -97,7 +105,11 @@ void TnpDelayAudioProcessor::changeProgramName (int index, const String& newName
 //==============================================================================
 void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+	treeState.addParameterListener("delayTime", this);
+	treeState.addParameterListener("feedback", this);
+	treeState.addParameterListener("wetMix", this);
 	delay.prepareToPlay(sampleRate);
+	delay.updateParams();
 }
 
 void TnpDelayAudioProcessor::releaseResources()
@@ -145,8 +157,6 @@ void TnpDelayAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer
 	for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
 		buffer.clear(i, 0, buffer.getNumSamples());
 
-	delay.updateParams();
-
 	for (int sample = 0; sample < buffer.getNumSamples(); sample++)
 	{
 		float* outputDataL = buffer.getWritePointer(0, sample);
@@ -178,6 +188,11 @@ void TnpDelayAudioProcessor::setStateInformation (const void* data, int sizeInBy
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+void TnpDelayAudioProcessor::parameterChanged(const String & parameterID, float newValue)
+{
+	delay.updateParams();
 }
 
 //==============================================================================
