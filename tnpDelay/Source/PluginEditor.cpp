@@ -94,8 +94,3 @@ void TnpDelayAudioProcessorEditor::resized()
 	wetMixLabel.setBounds(wetMixArea.removeFromBottom(30));
 	wetMixSlider.setBounds(wetMixArea);	
 }
-
-void TnpDelayAudioProcessorEditor::sliderValueChanged(Slider * slider)
-{
-	processor.delay.setDelayTime(delayTimeSlider.getValue());
-}

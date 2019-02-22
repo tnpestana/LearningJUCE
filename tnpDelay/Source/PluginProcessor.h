@@ -33,6 +33,9 @@ public:
 
     void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
 
+	void updateDelay();
+	void processDelay(AudioBuffer<float>& buffer);
+
     //==============================================================================
     AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override;

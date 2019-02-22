@@ -16,18 +16,15 @@
 class TnpStereoDelay
 {
 public:
-	TnpStereoDelay(AudioProcessorValueTreeState&);
+	TnpStereoDelay();
 	~TnpStereoDelay();
 
-	void setDelayTime(float delayTime);
-
-	void updateParams();
+	void updateParams(float delayTime, float feedback, float wet);
 
 	void prepareToPlay(double sampleRate);
 	void processAudio(float* inputBufferL, float* inputBufferR);
 
 private:
-	AudioProcessorValueTreeState& treeState;
 	TnpDelayLine delayLeft, delayRight;
 	float currentDelayTime, currentFeedback, currentMix;
 	

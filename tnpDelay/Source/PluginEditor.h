@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class TnpDelayAudioProcessorEditor  : public AudioProcessorEditor, public Slider::Listener
+class TnpDelayAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
     TnpDelayAudioProcessorEditor (TnpDelayAudioProcessor&);
@@ -50,7 +50,4 @@ private:
 
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TnpDelayAudioProcessorEditor)
-
-		// Inherited via Listener
-		virtual void sliderValueChanged(Slider * slider) override;
 };
