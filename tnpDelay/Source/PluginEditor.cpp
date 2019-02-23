@@ -29,15 +29,12 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
     // editor's size to whatever you need it to be.
     setSize (400, 200);
 
+	setLookAndFeel(&tnpLookAndFeel);
+
 	addAndMakeVisible(sliderDelayTimeL);
 	addAndMakeVisible(sliderDelayTimeR);
 	addAndMakeVisible(sliderFeedback);
 	addAndMakeVisible(sliderWetMix);
-
-	sliderDelayTimeL.setLookAndFeel(&tnpLookAndFeel);
-	sliderDelayTimeR.setLookAndFeel(&tnpLookAndFeel);
-	sliderFeedback.setLookAndFeel(&tnpLookAndFeel);
-	sliderWetMix.setLookAndFeel(&tnpLookAndFeel);
 
 	sliderDelayTimeL.setSliderStyle(Slider::RotaryVerticalDrag);
 	sliderDelayTimeR.setSliderStyle(Slider::RotaryVerticalDrag);
@@ -75,7 +72,7 @@ void TnpDelayAudioProcessorEditor::paint (Graphics& g)
     // (Our component is opaque, so we must completely fill the background with a solid colour)
 	g.fillAll(Colours::grey);
 
-	tnpLookAndFeel.setColour(Slider::backgroundColourId, Colours::whitesmoke);
+	tnpLookAndFeel.setColour(Slider::rotarySliderFillColourId, Colours::whitesmoke);
 	tnpLookAndFeel.setColour(Slider::rotarySliderOutlineColourId, Colours::darkslategrey);
 	tnpLookAndFeel.setColour(Slider::thumbColourId, Colours::black);
 
