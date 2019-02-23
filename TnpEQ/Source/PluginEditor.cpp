@@ -31,6 +31,8 @@ TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p)
 {
     setSize (350, 250);
 
+	setLookAndFeel(&tnpLookAndFeel);
+
 	backgroundImage = ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
 
 	loBand.setSliderStyle(Slider::RotaryVerticalDrag);
@@ -73,12 +75,6 @@ TnpEqAudioProcessorEditor::TnpEqAudioProcessorEditor (TnpEqAudioProcessor& p)
 	addAndMakeVisible(labelHiBand);
 	addAndMakeVisible(labelLoCutoff);
 	addAndMakeVisible(labelHiCutoff);
-
-	loBand.setLookAndFeel(&tnpLookAndFeel);
-	midBand.setLookAndFeel(&tnpLookAndFeel);
-	hiBand.setLookAndFeel(&tnpLookAndFeel);
-	loCutoff.setLookAndFeel(&tnpLookAndFeel);
-	hiCutoff.setLookAndFeel(&tnpLookAndFeel);
 }
 
 TnpEqAudioProcessorEditor::~TnpEqAudioProcessorEditor()
@@ -96,7 +92,7 @@ void TnpEqAudioProcessorEditor::paint (Graphics& g)
 	getLookAndFeel().setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);	// doesnt work?
 
 	//tnpLookAndFeel.setColour(Slider::textBoxBackgroundColourId, Colours::rosybrown);
-	tnpLookAndFeel.setColour(Slider::backgroundColourId, Colours::beige);
+	tnpLookAndFeel.setColour(Slider::rotarySliderFillColourId, Colours::beige);
 	tnpLookAndFeel.setColour(Slider::thumbColourId, Colours::black);
 	tnpLookAndFeel.setColour(Slider::rotarySliderOutlineColourId, Colours::black);
 
