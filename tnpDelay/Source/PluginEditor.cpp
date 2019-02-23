@@ -16,44 +16,53 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
     : AudioProcessorEditor (&p), 
 	processor (p),
 	treeState(p.getTreeState()),
-	delayTimeAttachment(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(treeState, "delayTime", delayTimeSlider)),
-	feedbackAttachment(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(treeState, "feedback", feedbackSlider)),
-	wetMixAttachment(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
-		(treeState, "wetMix", wetMixSlider))
+	attDelayTimeL(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "delayTimeL", sliderDelayTimeL)),
+	attDelayTimeR(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "delayTimeR", sliderDelayTimeR)),
+	attFeedback(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "feedback", sliderFeedback)),
+	attWetMix(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "wetMix", sliderWetMix))
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 200);
 
-	addAndMakeVisible(delayTimeSlider);
-	addAndMakeVisible(feedbackSlider);
-	addAndMakeVisible(wetMixSlider);
+	addAndMakeVisible(sliderDelayTimeL);
+	addAndMakeVisible(sliderDelayTimeR);
+	addAndMakeVisible(sliderFeedback);
+	addAndMakeVisible(sliderWetMix);
 
-	delayTimeSlider.setLookAndFeel(&tnpLookAndFeel);
-	feedbackSlider.setLookAndFeel(&tnpLookAndFeel);
-	wetMixSlider.setLookAndFeel(&tnpLookAndFeel);
+	sliderDelayTimeL.setLookAndFeel(&tnpLookAndFeel);
+	sliderDelayTimeR.setLookAndFeel(&tnpLookAndFeel);
+	sliderFeedback.setLookAndFeel(&tnpLookAndFeel);
+	sliderWetMix.setLookAndFeel(&tnpLookAndFeel);
 
-	delayTimeSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-	feedbackSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-	wetMixSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+	sliderDelayTimeL.setSliderStyle(Slider::RotaryVerticalDrag);
+	sliderDelayTimeR.setSliderStyle(Slider::RotaryVerticalDrag);
+	sliderFeedback.setSliderStyle(Slider::RotaryVerticalDrag);
+	sliderWetMix.setSliderStyle(Slider::RotaryVerticalDrag);
 
-	delayTimeSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
-	feedbackSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
-	wetMixSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
+	sliderDelayTimeL.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
+	sliderDelayTimeR.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
+	sliderFeedback.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
+	sliderWetMix.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
 
-	addAndMakeVisible(delayTimeLabel);
-	addAndMakeVisible(feedbackLabel);
-	addAndMakeVisible(wetMixLabel);
+	addAndMakeVisible(lblDelayTimeL);
+	addAndMakeVisible(lblDelayTimeR);
+	addAndMakeVisible(lblFeedback);
+	addAndMakeVisible(lblWetMix);
 
-	delayTimeLabel.setText("time", dontSendNotification);
-	feedbackLabel.setText("feedback", dontSendNotification);
-	wetMixLabel.setText("dry/wet", dontSendNotification);
+	lblDelayTimeL.setText("time L", dontSendNotification);
+	lblDelayTimeR.setText("time R", dontSendNotification);
+	lblFeedback.setText("feedback", dontSendNotification);
+	lblWetMix.setText("dry/wet", dontSendNotification);
 
-	delayTimeLabel.setJustificationType(Justification::centred);
-	feedbackLabel.setJustificationType(Justification::centred);
-	wetMixLabel.setJustificationType(Justification::centred);
+	lblDelayTimeL.setJustificationType(Justification::centred);
+	lblDelayTimeR.setJustificationType(Justification::centred);
+	lblFeedback.setJustificationType(Justification::centred);
+	lblWetMix.setJustificationType(Justification::centred);
 }
 
 TnpDelayAudioProcessorEditor::~TnpDelayAudioProcessorEditor()
@@ -74,24 +83,29 @@ void TnpDelayAudioProcessorEditor::paint (Graphics& g)
 
 	// getLookAndFeel() doesn't seem to work for setting sliders text boxes colours
 	// so I set them individually
-	delayTimeSlider.setColour(Slider::textBoxTextColourId, Colours::black);
-	feedbackSlider.setColour(Slider::textBoxTextColourId, Colours::black);
-	wetMixSlider.setColour(Slider::textBoxTextColourId, Colours::black);
+	sliderDelayTimeL.setColour(Slider::textBoxTextColourId, Colours::black);
+	sliderDelayTimeR.setColour(Slider::textBoxTextColourId, Colours::black);
+	sliderFeedback.setColour(Slider::textBoxTextColourId, Colours::black);
+	sliderWetMix.setColour(Slider::textBoxTextColourId, Colours::black);
 }
 
 void TnpDelayAudioProcessorEditor::resized()
 {
 	juce::Rectangle<int> area(getLocalBounds());
 
-	juce::Rectangle<int> delayTimeArea(area.removeFromLeft(area.getWidth() / 3).reduced(5));
-	delayTimeLabel.setBounds(delayTimeArea.removeFromBottom(30));
-	delayTimeSlider.setBounds(delayTimeArea);
+	juce::Rectangle<int> areaDelayTimeL(area.removeFromLeft(area.getWidth() / 4).reduced(5));
+	lblDelayTimeL.setBounds(areaDelayTimeL.removeFromBottom(30));
+	sliderDelayTimeL.setBounds(areaDelayTimeL);
 
-	juce::Rectangle<int> feedbackArea(area.removeFromLeft(area.getWidth() / 2).reduced(5));
-	feedbackLabel.setBounds(feedbackArea.removeFromBottom(30));
-	feedbackSlider.setBounds(feedbackArea);
+	juce::Rectangle<int> areaDelayTimeR(area.removeFromLeft(area.getWidth() / 3).reduced(5));
+	lblDelayTimeR.setBounds(areaDelayTimeR.removeFromBottom(30));
+	sliderDelayTimeR.setBounds(areaDelayTimeR);
 
-	juce::Rectangle<int> wetMixArea(area.reduced(5));
-	wetMixLabel.setBounds(wetMixArea.removeFromBottom(30));
-	wetMixSlider.setBounds(wetMixArea);	
+	juce::Rectangle<int> areaFeedback(area.removeFromLeft(area.getWidth() / 2).reduced(5));
+	lblFeedback.setBounds(areaFeedback.removeFromBottom(30));
+	sliderFeedback.setBounds(areaFeedback);
+
+	juce::Rectangle<int> areaWetMix(area.reduced(5));
+	lblWetMix.setBounds(areaWetMix.removeFromBottom(30));
+	sliderWetMix.setBounds(areaWetMix);
 }

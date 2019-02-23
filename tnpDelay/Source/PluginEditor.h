@@ -35,17 +35,20 @@ private:
 
 	TnpLookAndFeel tnpLookAndFeel;
 
-	Slider delayTimeSlider;
-	Slider feedbackSlider;
-	Slider wetMixSlider;
+	Slider sliderDelayTimeL;
+	Slider sliderDelayTimeR;
+	Slider sliderFeedback;
+	Slider sliderWetMix;
 
-	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
-	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> wetMixAttachment;
-	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attDelayTimeL;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attDelayTimeR;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attWetMix;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attFeedback;
 
-	Label delayTimeLabel;
-	Label feedbackLabel;
-	Label wetMixLabel;
+	Label lblDelayTimeL;
+	Label lblDelayTimeR;
+	Label lblFeedback;
+	Label lblWetMix;
 
 	//==============================================================================
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TnpDelayAudioProcessorEditor)

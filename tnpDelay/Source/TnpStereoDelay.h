@@ -19,7 +19,7 @@ public:
 	TnpStereoDelay();
 	~TnpStereoDelay();
 
-	void updateParams(float delayTime, float feedback, float wet);
+	void updateParams(float delayTimeL, float delayTimeR, float feedback, float wet);
 
 	void prepareToPlay(double sampleRate);
 	void processAudio(float* inputBufferL, float* inputBufferR);

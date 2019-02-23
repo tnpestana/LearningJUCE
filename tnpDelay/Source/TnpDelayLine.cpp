@@ -98,18 +98,12 @@ float TnpDelayLine::processAudio(float* inputBuffer)
 	if (buffer != NULL)
 	{
 		float yn = buffer[delayReadPosition];
-
 		float xn = *inputBuffer;
-
 		if (smoothDelayLength.getNextValue() == 0)
 			yn = xn;
-
 		buffer[delayWritePosition] = xn + feedback * yn;
-
 		output = (xn * (1 - wetMix)) + (yn * wetMix);
-
 		*inputBuffer = output;
-
 		delayReadPosition++;
 		if (delayReadPosition >= bufferSize)
 			delayReadPosition = 0;
@@ -117,6 +111,5 @@ float TnpDelayLine::processAudio(float* inputBuffer)
 		if (delayWritePosition >= bufferSize)
 			delayWritePosition = 0;
 	}
-
 	return output;
 }

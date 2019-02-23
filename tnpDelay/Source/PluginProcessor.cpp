@@ -24,7 +24,9 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
                        ),
 	treeState(*this, nullptr, "TnpDelayState",
 	{
-		std::make_unique<AudioParameterFloat>("delayTime", "Delay Time",
+		std::make_unique<AudioParameterFloat>("delayTimeL", "Delay Time L",
+			NormalisableRange<float>(0.f, 2.f, 0.001f), 0.5f),
+		std::make_unique<AudioParameterFloat>("delayTimeR", "Delay Time R",
 			NormalisableRange<float>(0.f, 2.f, 0.001f), 0.5f),
 		std::make_unique<AudioParameterFloat>("feedback", "Feedback",
 			NormalisableRange<float>(0.f, 1.f, 0.001f), 0.5f),
@@ -105,7 +107,8 @@ void TnpDelayAudioProcessor::changeProgramName (int index, const String& newName
 //==============================================================================
 void TnpDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-	treeState.addParameterListener("delayTime", this);
+	treeState.addParameterListener("delayTimeL", this);
+	treeState.addParameterListener("delayTimeR", this);
 	treeState.addParameterListener("feedback", this);
 	treeState.addParameterListener("wetMix", this);
 	delay.prepareToPlay(sampleRate);
@@ -163,7 +166,8 @@ void TnpDelayAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer
 //==============================================================================
 void TnpDelayAudioProcessor::updateDelay()
 {
-	delay.updateParams(*treeState.getRawParameterValue("delayTime"),
+	delay.updateParams(*treeState.getRawParameterValue("delayTimeL"),
+		*treeState.getRawParameterValue("delayTimeR"),
 		*treeState.getRawParameterValue("feedback"),
 		*treeState.getRawParameterValue("wetMix"));
 }
