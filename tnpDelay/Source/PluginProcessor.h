@@ -59,15 +59,16 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+	AudioProcessorValueTreeState& getTreeState();
+
+private:
+	// Inherited via Listener
+	virtual void parameterChanged(const String & parameterID, float newValue) override;
+
 	//==============================================================================
 	AudioProcessorValueTreeState treeState;
 	TnpStereoDelay delay;
 
-private:
-
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpDelayAudioProcessor)
-
-		// Inherited via Listener
-		virtual void parameterChanged(const String & parameterID, float newValue) override;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TnpDelayAudioProcessor)	
 };

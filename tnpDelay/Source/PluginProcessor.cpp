@@ -22,18 +22,18 @@ TnpDelayAudioProcessor::TnpDelayAudioProcessor()
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
                        ),
-	treeState(*this, nullptr),
+	treeState(*this, nullptr, "TnpDelayState",
+	{
+		std::make_unique<AudioParameterFloat>("delayTime", "Delay Time",
+			NormalisableRange<float>(0.f, 2.f, 0.001f), 0.5f),
+		std::make_unique<AudioParameterFloat>("feedback", "Feedback",
+			NormalisableRange<float>(0.f, 1.f, 0.001f), 0.5f),
+		std::make_unique<AudioParameterFloat>("wetMix", "Dry/Wet",
+			NormalisableRange<float>(0.f, 1.f, 0.001f), 0.5f)
+	}),
 	delay()
 #endif
 {
-	NormalisableRange<float> delayTimeRange(0.f, 2.f, 0.001f);
-	treeState.createAndAddParameter("delayTime", "DelayTime", String(), delayTimeRange, 0.5f, nullptr, nullptr);
-	NormalisableRange<float> feedbackRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("feedback", "Feedback", String(), feedbackRange, .5f, nullptr, nullptr);
-	NormalisableRange<float> wetMixRange(0.f, 1.f, 0.001f);
-	treeState.createAndAddParameter("wetMix", "WetMix", String(), wetMixRange, 0.5f, nullptr, nullptr);
-
-	treeState.state = ValueTree(Identifier("DelayState"));
 }
 
 TnpDelayAudioProcessor::~TnpDelayAudioProcessor()
@@ -201,6 +201,11 @@ void TnpDelayAudioProcessor::setStateInformation (const void* data, int sizeInBy
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+AudioProcessorValueTreeState & TnpDelayAudioProcessor::getTreeState()
+{
+	return treeState;
 }
 
 void TnpDelayAudioProcessor::parameterChanged(const String & parameterID, float newValue)

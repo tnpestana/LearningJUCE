@@ -31,21 +31,20 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     TnpDelayAudioProcessor& processor;
-
-	juce::Image backgroundImage;
+	AudioProcessorValueTreeState& treeState;
 
 	TnpLookAndFeel tnpLookAndFeel;
 
 	Slider delayTimeSlider;
-	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
-	Label delayTimeLabel;
-
 	Slider feedbackSlider;
-	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
-	Label feedbackLabel;
-
 	Slider wetMixSlider;
-	ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> wetMixAttachment;
+
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> delayTimeAttachment;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> wetMixAttachment;
+	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
+
+	Label delayTimeLabel;
+	Label feedbackLabel;
 	Label wetMixLabel;
 
 	//==============================================================================

@@ -13,13 +13,19 @@
 
 //==============================================================================
 TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+    : AudioProcessorEditor (&p), 
+	processor (p),
+	treeState(p.getTreeState()),
+	delayTimeAttachment(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "delayTime", delayTimeSlider)),
+	feedbackAttachment(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "feedback", feedbackSlider)),
+	wetMixAttachment(std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
+		(treeState, "wetMix", wetMixSlider))
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 200);
-
-	//backgroundImage = ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
 
 	addAndMakeVisible(delayTimeSlider);
 	addAndMakeVisible(feedbackSlider);
@@ -36,10 +42,6 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
 	delayTimeSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
 	feedbackSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
 	wetMixSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 50, 15);
-
-	delayTimeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "delayTime", delayTimeSlider);
-	feedbackAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "feedback", feedbackSlider);
-	wetMixAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "wetMix", wetMixSlider);
 
 	addAndMakeVisible(delayTimeLabel);
 	addAndMakeVisible(feedbackLabel);
@@ -63,7 +65,6 @@ void TnpDelayAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
 	g.fillAll(Colours::grey);
-	//g.drawImageAt(backgroundImage, 0, 0);
 
 	tnpLookAndFeel.setColour(Slider::backgroundColourId, Colours::whitesmoke);
 	tnpLookAndFeel.setColour(Slider::rotarySliderOutlineColourId, Colours::darkslategrey);
