@@ -83,15 +83,15 @@ void TnpDelayAudioProcessorEditor::resized()
 {
 	juce::Rectangle<int> area(getLocalBounds());
 
-	juce::Rectangle<int> delayTimeArea(area.removeFromLeft(area.getWidth() / 3));
+	juce::Rectangle<int> delayTimeArea(area.removeFromLeft(area.getWidth() / 3).reduced(5));
 	delayTimeLabel.setBounds(delayTimeArea.removeFromBottom(30));
 	delayTimeSlider.setBounds(delayTimeArea);
 
-	juce::Rectangle<int> feedbackArea(area.removeFromLeft(area.getWidth() / 2));
+	juce::Rectangle<int> feedbackArea(area.removeFromLeft(area.getWidth() / 2).reduced(5));
 	feedbackLabel.setBounds(feedbackArea.removeFromBottom(30));
 	feedbackSlider.setBounds(feedbackArea);
 
-	juce::Rectangle<int> wetMixArea(area);
+	juce::Rectangle<int> wetMixArea(area.reduced(5));
 	wetMixLabel.setBounds(wetMixArea.removeFromBottom(30));
 	wetMixSlider.setBounds(wetMixArea);	
 }
