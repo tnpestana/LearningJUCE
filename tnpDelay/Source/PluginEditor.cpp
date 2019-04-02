@@ -56,6 +56,11 @@ TnpDelayAudioProcessorEditor::TnpDelayAudioProcessorEditor (TnpDelayAudioProcess
 	lblFeedback.setText("feedback", dontSendNotification);
 	lblWetMix.setText("dry/wet", dontSendNotification);
 
+	sliderDelayTimeL.setTextValueSuffix(" s");
+	sliderDelayTimeR.setTextValueSuffix(" s");
+	sliderFeedback.setTextValueSuffix(" %");
+	sliderWetMix.setTextValueSuffix(" %");
+
 	lblDelayTimeL.setJustificationType(Justification::centred);
 	lblDelayTimeR.setJustificationType(Justification::centred);
 	lblFeedback.setJustificationType(Justification::centred);
