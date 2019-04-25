@@ -12,13 +12,14 @@
 
 TnpDelayLine::TnpDelayLine()
 	: buffer(nullptr),
-	delayLength(0.0),
+	targetDelayLength(0.0f),
+	currentDelayLength(0.0f),
 	bufferSize(0),
 	delayReadPosition(0),
 	delayWritePosition(0),
 	sampleRate(0),
-	feedback(0.0),
-	wetMix(0.0),
+	feedback(0.0f),
+	wetMix(0.0f),
 	smoothDelayLength(0.0f)
 {
 }
@@ -37,7 +38,7 @@ void TnpDelayLine::resetDelay(double sampleRate)
 	delayWritePosition = 0.0;
 
 	this->sampleRate = sampleRate;
-	smoothDelayLength.reset(sampleRate, 0.5);
+	//smoothDelayLength.reset(sampleRate, 0.5);
 	initBuffer();
 }
 
@@ -73,11 +74,13 @@ void TnpDelayLine::setWetMix(float wetMix)
 void TnpDelayLine::setDelayTime(double delayTime_ms)
 {
 	smoothDelayLength.setValue(delayTime_ms);
+	targetDelayLength = delayTime_ms;
 }
 
 void TnpDelayLine::setupBuffer()
 {
-	delayInSamples = smoothDelayLength.getNextValue() * sampleRate;
+	delayInSamples = currentDelayLength * sampleRate;
+	//delayInSamples = smoothDelayLength.getNextValue() * sampleRate;
 
 	delayReadPosition = (int)(delayWritePosition - delayInSamples);
 
@@ -88,10 +91,14 @@ void TnpDelayLine::setupBuffer()
 
 float TnpDelayLine::processAudio(float* inputBuffer)
 {
-	if (smoothDelayLength.isSmoothing())
+	if (currentDelayLength != targetDelayLength)
 	{
+		currentDelayLength += (targetDelayLength - currentDelayLength) / bufferSize;
 		setupBuffer();
 	}
+
+	//if (smoothDelayLength.isSmoothing())
+	//	setupBuffer();
 
 	float output = 0.0;
 	
@@ -99,7 +106,9 @@ float TnpDelayLine::processAudio(float* inputBuffer)
 	{
 		float yn = buffer[delayReadPosition];
 		float xn = *inputBuffer;
-		if (smoothDelayLength.getNextValue() == 0)
+		//if (smoothDelayLength.getNextValue() == 0)
+		//	yn = xn;
+		if (currentDelayLength == 0.0f)
 			yn = xn;
 		buffer[delayWritePosition] = xn + feedback * yn;
 		output = (xn * (1 - wetMix)) + (yn * wetMix);
