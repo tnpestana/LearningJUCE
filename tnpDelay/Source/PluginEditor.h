@@ -42,8 +42,8 @@ private:
 
 	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attDelayTimeL;
 	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attDelayTimeR;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attFeedback;
 	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attWetMix;
-	std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attFeedback;
 
 	Label lblDelayTimeL;
 	Label lblDelayTimeR;

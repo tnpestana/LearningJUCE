@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="PTp3P7" name="tnpDelay" projectType="audioplug" jucerVersion="5.4.3"
-              pluginFormats="buildAU,buildVST3" pluginName="TnpDelay" pluginManufacturer="Tiago Pestana"
-              pluginVST3Category="Delay" pluginRTASCategory="16" pluginAAXCategory="16">
+              pluginFormats="buildAU,buildVST,buildVST3" pluginName="TnpDelay"
+              pluginManufacturer="Tiago Pestana" pluginVST3Category="Delay"
+              pluginRTASCategory="16" pluginAAXCategory="16">
   <MAINGROUP id="nS7awJ" name="tnpDelay">
     <GROUP id="{600BAB3F-D48C-1D32-34DE-F52190FBAB71}" name="Source">
       <GROUP id="{D98FF0BB-2118-BE53-DB78-99F7648FC97A}" name="UI">

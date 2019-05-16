@@ -25,7 +25,6 @@ public:
 	void processAudio(float* inputBufferL, float* inputBufferR);
 
 private:
-	TnpDelayLine delayLeft, delayRight;
 	float currentDelayTime, currentFeedback, currentMix;
-	
+	TnpDelayLine delayLeft, delayRight;
 };

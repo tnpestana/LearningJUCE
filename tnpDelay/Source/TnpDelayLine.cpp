@@ -11,16 +11,16 @@
 #include "TnpDelayLine.h"
 
 TnpDelayLine::TnpDelayLine()
-	: buffer(nullptr),
-	targetDelayLength(0.0f),
-	currentDelayLength(0.0f),
-	bufferSize(0),
-	delayReadPosition(0),
-	delayWritePosition(0),
-	sampleRate(0),
-	feedback(0.0f),
-	wetMix(0.0f),
-	smoothDelayLength(0.0f)
+: buffer(nullptr),
+bufferSize(0),
+targetDelayLength(0.0f),
+currentDelayLength(0.0f),
+delayReadPosition(0),
+delayWritePosition(0),
+sampleRate(0),
+feedback(0.0f),
+wetMix(0.0f),
+smoothDelayLength(0.0f)
 {
 }
 
@@ -73,7 +73,7 @@ void TnpDelayLine::setWetMix(float wetMix)
 
 void TnpDelayLine::setDelayTime(double delayTime_ms)
 {
-	smoothDelayLength.setValue(delayTime_ms);
+	smoothDelayLength.setTargetValue(delayTime_ms);
 	targetDelayLength = delayTime_ms;
 }
 
