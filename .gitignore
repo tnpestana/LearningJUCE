@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Reverb/Builds/
 Reverb/JuceLibraryCode/
 =======
@@ -25,3 +26,7 @@ MaxSynth/JuceLibraryCode/
 WavetableSynth/Builds/
 WavetableSynth/JuceLibraryCode/
 >>>>>>> WavetableSynth/master
+=======
+tnpDelay/Builds/
+tnpDelay/JuceLibraryCode/
+>>>>>>> Delay/master
