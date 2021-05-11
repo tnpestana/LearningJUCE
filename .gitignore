@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Reverb/Builds/
 Reverb/JuceLibraryCode/
 =======
@@ -20,3 +21,7 @@ tnpSampleSynth/JuceLibraryCode/
 MaxSynth/Builds/
 MaxSynth/JuceLibraryCode/
 >>>>>>> MaxSynth/master
+=======
+WavetableSynth/Builds/
+WavetableSynth/JuceLibraryCode/
+>>>>>>> WavetableSynth/master
