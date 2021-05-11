@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Reverb/Builds/
 Reverb/JuceLibraryCode/
 =======
@@ -10,3 +11,7 @@ TnpEQ/JuceLibraryCode/
 TnpMobileRecorder/Builds/
 TnpMobileRecorder/JuceLibraryCode/
 >>>>>>> MobileRecorder/master
+=======
+tnpSampleSynth/Builds/
+tnpSampleSynth/JuceLibraryCode/
+>>>>>>> SampleSynth/master
