@@ -1,7 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 Reverb/Builds/
 Reverb/JuceLibraryCode/
 =======
 TnpEQ/Builds/
 TnpEQ/JuceLibraryCode/
 >>>>>>> EQ/master
+=======
+TnpMobileRecorder/Builds/
+TnpMobileRecorder/JuceLibraryCode/
+>>>>>>> MobileRecorder/master
